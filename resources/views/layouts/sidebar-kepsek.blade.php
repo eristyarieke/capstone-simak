@@ -18,6 +18,6 @@
         <div class="menu-title">Website</div>
         <a href="#">Landing Page</a>
 
-        <a href="#" style="margin-top:20px;">Logout</a>
+        <a href="#" style="margin-top:10px;">Logout</a>
     </div>
 </div>

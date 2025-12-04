@@ -184,6 +184,42 @@ body {
 /* ============================
               BUTTONS
 ============================ */
+/* Wrapper tombol aksi agar rapi */
+.action-buttons {
+    display: flex;
+    gap: 6px;              /* Jarak antar tombol */
+    align-items: center;
+}
+
+/* Tombol edit */
+.btn-edit {
+    background: #ffe600 !important;
+    color: #000 !important;
+    border: none;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-edit:hover {
+    background: #ffda00 !important;
+}
+
+/* Tombol hapus */
+.btn-delete {
+    background: #d9534f !important;
+    border: none;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-delete:hover {
+    background: #c9302c !important;
+}
+
 .btn {
     padding: 7px 15px;
     border-radius: 6px;

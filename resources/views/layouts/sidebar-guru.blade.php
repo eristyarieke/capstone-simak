@@ -5,6 +5,7 @@
         <div class="role">Guru</div>
     </div>
 
+    <div class="menu-wrapper">
     <div class="menu">
         <a href="#" class="active">
             <i class="fa-solid fa-house"></i>
@@ -30,10 +31,11 @@
             Kembali ke Landing Page
         </a>
 
-        <a href="#" style="margin-top:20px;">
+        <a href="#" style="margin-top:10px;">
             <i class="fa-solid fa-right-from-brain"></i>
             Logout
         </a>
+</div>
         
     </div>
 </div>

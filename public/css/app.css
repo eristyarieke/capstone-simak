@@ -1,51 +1,60 @@
+/* ===============================
+   GLOBAL BASE & BODY
+=============================== */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 body {
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background: #f4f5f7;
+    background: #f5f7fa;
+    color: #333;
 }
 
-/* ============================
-   WRAPPER MAIN STRUCTURE
-============================ */
+/* ===============================
+   WRAPPER & MAIN AREA
+=============================== */
 .wrapper {
     display: flex;
     width: 100%;
     min-height: 100vh;
+    background: #f5f7fa;
 }
 
-/* Area di kanan sidebar (Header + Content) */
 .main-area {
-    margin-left: 230px; /* lebar sidebar */
-    width: calc(100% - 230px);
+    margin-left: 245px;
+    width: calc(100% - 245px);
     min-height: 100vh;
 }
 
-/* ============================
-        GLOBAL HEADER
-============================ */
+/* ===============================
+   HEADER
+=============================== */
 .global-header {
     background: #0B2A4A;
-    padding: 15px 25px;
-    border-bottom: 1px solid #1c1c1c;
+    padding: 16px 30px;
+    border-bottom: 1px solid rgba(255,255,255,0.15);
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
 .gh-title {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 600;
-    text-align: left;
-    margin: 0;
     color: #ffffff;
+    margin: 0;
 }
 
-/* ============================
-            SIDEBAR
-============================ */
+/* ===============================
+   SIDEBAR
+=============================== */
 .sidebar {
-    width: 230px;
+    width: 245px;
     background: #0B2A4A;
     color: white;
     display: flex;
@@ -54,27 +63,37 @@ body {
     position: fixed;
     left: 0;
     top: 0;
-    height: 100vh;
+    min-height: 96vh;  
+    height: 96vh; 
+    overflow: hidden; 
+    overflow-y: auto;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.06);
+}
+
+.sidebar .menu-wrapper {
+    flex: 1;
     overflow-y: auto;
 }
 
+
+/* Sidebar Profile */
 .sidebar .profile-section {
     text-align: center;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    padding: 15px 0;
 }
 
 .sidebar .profile-section img {
     width: 95px;
     height: 95px;
     border-radius: 50%;
-    border: 4px solid #1e5aac;
+    border: 4px solid #1E90FF;
     object-fit: cover;
+    background: white;
 }
 
 .sidebar .profile-section .name {
     font-size: 14px;
-    margin-top: 8px;
+    margin-top: 10px;
     font-weight: 600;
 }
 
@@ -83,38 +102,24 @@ body {
     opacity: .8;
 }
 
-.sidebar .menu {
-    margin-top: 15px;
-}
-
+/* Sidebar Menu */
 .sidebar .menu-title {
     font-size: 11px;
-    text-transform: uppercase;
     opacity: 0.6;
-    padding: 10px 20px;
+    padding: 12px 20px 5px;
+    text-transform: uppercase;
 }
 
 .sidebar a {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
+    gap: 12px;
+    padding: 11px 20px;
     text-decoration: none;
-    color: white;
+    color: #ffffff;
     font-size: 13px;
-    transition: 0.3s;
+    transition: 0.25s;
     border-left: 4px solid transparent;
-}
-
-.sidebar a:hover {
-    background: #123a65;
-    border-left: 4px solid #1E90FF;
-}
-
-.sidebar a.active {
-    background: #123a65;
-    border-left: 4px solid #1E90FF;
-    font-weight: 600;
 }
 
 .sidebar a i {
@@ -122,43 +127,159 @@ body {
     text-align: center;
 }
 
-/* ============================
-            CONTENT
-============================ */
+.sidebar a:hover {
+    background: rgba(255,255,255,0.08);
+    border-left: 4px solid #1E90FF;
+}
+
+.sidebar a.active {
+    background: rgba(255,255,255,0.12);
+    border-left: 4px solid #1E90FF;
+    font-weight: 600;
+}
+
+
+/* Garis pembatas atas */
+.logout-menu {
+    border-top: 1px solid rgba(255,255,255,0.2);
+    margin-top: 15px;
+    padding-top: 15px;
+}
+
+/* Hover merah hanya untuk logout */
+.logout-menu:hover {
+    background: rgba(255, 0, 0, 0.15);
+    border-left: 4px solid #ff4d4d;
+    color: #ff4d4d;
+}
+
+.logout-menu:hover i {
+    color: #ff4d4d;
+}
+
+
+/* ===============================
+   CONTENT AREA
+=============================== */
 .content {
-    flex: 1;
-    padding: 30px 35px;
+    padding: 25px 35px;
+    max-width: 900px;
+    margin: auto;
 }
 
 .content-header {
-    font-size: 22px;
+    font-size: 26px;
     font-weight: 700;
     margin-bottom: 20px;
+    color: #0B2A4A;
 }
 
-/* ============================
-              CARD
-============================ */
+/* ===============================
+   SUBTITLE
+=============================== */
+.sub-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1E90FF;
+}
+
+.sub-desc {
+    margin-top: 4px;
+    color: #666;
+}
+
+/* ===============================
+   CARD
+=============================== */
 .card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    margin-top: 20px;
 }
 
+/* FORM CARD (FULL WIDTH) */
+.form-card,
+.form-card.full-width {
+    width: 100% !important;
+    max-width: 850px !important;
+    margin: 0 auto !important;
+    padding: 22px 26px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* ===============================
+   GRID LAYOUT
+=============================== */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 22px;
+}
+
+.form-group.full {
+    grid-column: span 2;
+}
+
+/* ===============================
+   FORM ELEMENTS
+=============================== */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label,
+.form-card label {
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #2b2b2b;
+}
+
+.form-control,
+.form-card input,
+.form-card select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #cfd6df;
+    background: #fafafa;
+    transition: 0.2s;
+}
+
+.form-control:focus,
+.form-card input:focus,
+.form-card select:focus {
+    border-color: #1E90FF;
+    background: #fff;
+    box-shadow: 0 0 0 2px rgba(30,144,255,0.2);
+}
+
+/* ===============================
+   SEARCH BOX
+=============================== */
 .search-box {
     width: 100%;
-    max-width: 450px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 8px 15px;
+    max-width: 480px;
+    border: 1px solid #d0d7de;
+    border-radius: 10px;
+    padding: 10px 14px;
     font-size: 14px;
-    margin-bottom: 15px;
+    transition: .2s;
 }
 
-/* ============================
-             TABLE
-============================ */
+.search-box:focus {
+    border-color: #1E90FF;
+    box-shadow: 0 0 0 2px rgba(30,144,255,0.18);
+}
+
+/* ===============================
+   TABLE
+=============================== */
 .table-wrapper {
     overflow-x: auto;
 }
@@ -169,36 +290,53 @@ body {
 }
 
 .table th {
-    background: #f0f2f5;
-    padding: 10px;
+    background: #eef1f6;
+    padding: 12px;
     font-size: 13px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #dfe4ea;
+    color: #0B2A4A;
 }
 
 .table td {
-    padding: 10px;
+    padding: 12px;
     font-size: 13px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 1px solid #f1f3f5;
 }
 
 .table tr:hover {
-    background: #f6f8fa;
+    background: #f8fafc;
 }
 
-/* ============================
-              BUTTONS
-============================ */
+/* ===============================
+   BUTTONS
+=============================== */
 .btn {
-    padding: 7px 15px;
-    border-radius: 6px;
+    padding: 8px 16px;
+    border-radius: 7px;
     font-size: 13px;
-    border: none;
     cursor: pointer;
+    border: none;
+    transition: 0.25s;
 }
 
 .btn-primary {
     background: #1E90FF;
+    color: white;
+}
+.btn-primary:hover {
+    background: #0D6EDE;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+.btn-secondary:hover {
+    background: #565e64;
+}
+
+.btn-edit {
+    background: #fce300;
     color: white;
 }
 
@@ -207,98 +345,110 @@ body {
     color: white;
 }
 
-.btn-edit {
-    background: #0275d8;
+/* Tombol aksi icon-only */
+.icon-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    font-size: 14px;
+}
+
+/* Edit */
+.icon-edit {
+    background: #ffeb3b;
+    color: #000;
+}
+
+.icon-edit:hover {
+    background: #ffe033;
+}
+
+/* Delete */
+.icon-delete {
+    background: #d9534f;
+    color: #fff;
+}
+
+.icon-delete:hover {
+    background: #c9302c;
+}
+
+/* Modern Buttons */
+.form-buttons {
+    justify-content: flex-end;
+}
+
+.form-buttons,
+.action-buttons {
+    display: flex;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.btn-custom,
+.btn-modern {
+    padding: 12px 0;
+    border-radius: 10px;
+    font-weight: 600;
+    border: none;
+    transition: 0.2s;
+}
+
+.btn-blue {
+    background: #0B4F9D;
+    color: #fff;
+}
+.btn-blue:hover {
+    background: #093f7b;
+}
+
+.btn-gray,
+.btn-grey {
+    background: #9a9a9a;
     color: white;
 }
-
-.btn-sm {
-    padding: 5px 10px;
-    font-size: 12px;
+.btn-gray:hover,
+.btn-grey:hover {
+    background: #818181;
 }
 
-/* ======= FORM WRAPPER / CARD ======= */
-.card {
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 25px;
-    border: 1px solid #e5e5e5;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-    margin-top: 20px;
-}
-
-/* ======= PAGE TITLE ======= */
-.content-header {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 15px;
-    color: #333;
-}
-
-/* ======= LABEL ======= */
-.form-group label {
-    font-weight: 600;
-    margin-bottom: 6px;
-    display: block;
-    color: #444;
-}
-
-/* ======= INPUT CONTROL ======= */
-.form-group .form-control {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #cfcfcf;
-    transition: 0.2s;
-    font-size: 14px;
-}
-
-.form-group .form-control:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 0 2px rgba(0,123,255,0.15);
-}
-
-/* ======= BUTTON ======= */
-.btn {
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 7px;
-}
-
-.btn-primary {
-    background: #007bff;
-    border: none;
-}
-
-.btn-primary:hover {
-    background: #0056c9;
-}
-
-.btn-secondary {
-    background: #6c757d;
-    border: none;
-}
-
-.btn-secondary:hover {
-    background: #5b6268;
-}
-
-/* ======= ALERT VALIDATION ======= */
+/* ===============================
+   ALERT
+=============================== */
 .alert-danger {
-    background: #ffe6e6;
-    color: #b30000;
-    border: 1px solid #ffb3b3;
-    padding: 12px 18px;
+    background: #ffe8e8;
+    color: #b60000;
+    border: 1px solid #ffb6b6;
+    padding: 14px 20px;
     border-radius: 8px;
     margin-bottom: 18px;
-}
-
-.alert-danger ul li {
     font-size: 14px;
 }
 
-/* ======= MOBILE RESPONSIVE ======= */
+/* ===============================
+   RESPONSIVE
+=============================== */
 @media(max-width: 600px){
+    .main-area {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .sidebar {
+        display: none;
+    }
+
     .card {
         padding: 18px;
     }

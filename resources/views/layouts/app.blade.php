@@ -17,7 +17,7 @@
         
         <!-- Global Header di samping sidebar -->
         <div class="global-header">
-            <h4 class="gh-title">Sistem Informasi Manajemen Sekolah dan Akademik (SIMAK)</h4>
+            <h6 class="gh-title">Sistem Informasi Manajemen Sekolah dan Akademik (SIMAK)</h4>
         </div>
 
         <div class="content">
