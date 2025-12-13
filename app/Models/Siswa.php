@@ -8,31 +8,24 @@ class Siswa extends Model
 {
     protected $table = 'siswa';
     protected $primaryKey = 'id_siswa';
-    public $timestamps = false;
 
     protected $fillable = [
-        'id_user','nis','nama','jenis_kelamin','tanggal_lahir',
-        'alamat','no_hp','id_kelas','tahun_masuk','foto'
+        'nama',
+        'jenis_kelamin',
+        'agama',
+        'id_kelas',
+        'id_tahun_ajaran'
     ];
 
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'id_user');
-    }
-
+    /* RELATIONS */
     public function kelas()
     {
         return $this->belongsTo(Kelas::class, 'id_kelas');
     }
 
-    public function nilai()
+    public function tahunAjaran()
     {
-        return $this->hasMany(Nilai::class, 'id_siswa');
-    }
-
-    public function absensi()
-    {
-        return $this->hasMany(Absensi::class, 'id_siswa');
+        return $this->belongsTo(TahunAjaran::class, 'id_tahun_ajaran');
     }
 
     public function prestasi()

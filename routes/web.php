@@ -29,6 +29,13 @@ Route::prefix('admin/jadwal')->group(function () {
 Route::get('/guru/jadwal', [JadwalPelajaranController::class, 'guru'])->name('jadwal.guru');
 
 // KEPSEK
-Route::get('/kepsek/jadwal', [JadwalPelajaranController::class, 'kepsek'])->name('jadwal.kepsek');
+Route::get('/kepsek/jadwal',
+    [JadwalPelajaranController::class, 'kepsek']
+)->name('kepsek.jadwal');
+
+Route::get('/kepsek/jadwal/pdf',
+    [JadwalPelajaranController::class, 'exportPdf']
+)->name('kepsek.jadwal.pdf');
+
 
 

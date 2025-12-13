@@ -17,9 +17,14 @@ return new class extends Migration
     $table->increments('id_mapel');
     $table->string('kode_mapel', 20);
     $table->string('nama_mapel', 100);
-    $table->unsignedInteger('id_guru');
+    $table->unsignedInteger('id_tahun_ajaran');
 
-    $table->foreign('id_guru')->references('id_guru')->on('guru');
+    $table->foreign('id_tahun_ajaran')
+          ->references('id_tahun_ajaran')
+          ->on('tahun_ajaran')
+          ->onDelete('cascade');
+
+    $table->timestamps();
 });
 
     }

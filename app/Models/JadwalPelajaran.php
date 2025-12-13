@@ -8,7 +8,6 @@ class JadwalPelajaran extends Model
 {
     protected $table = 'jadwal_pelajaran';
     protected $primaryKey = 'id_jadwal';
-    public $timestamps = false;
 
     protected $fillable = [
         'id_kelas',
@@ -17,21 +16,27 @@ class JadwalPelajaran extends Model
         'hari',
         'jam_mulai',
         'jam_selesai',
-        'ruang'
+        'id_tahun_ajaran'
     ];
 
+    /* RELATIONS */
     public function kelas()
     {
-        return $this->belongsTo(Kelas::class, 'id_kelas', 'id_kelas');
+        return $this->belongsTo(Kelas::class, 'id_kelas');
     }
 
     public function mapel()
     {
-        return $this->belongsTo(Mapel::class, 'id_mapel', 'id_mapel');
+        return $this->belongsTo(Mapel::class, 'id_mapel');
     }
 
     public function guru()
     {
-        return $this->belongsTo(Guru::class, 'id_guru', 'id_guru');
+        return $this->belongsTo(Guru::class, 'id_guru');
+    }
+
+    public function tahunAjaran()
+    {
+        return $this->belongsTo(TahunAjaran::class, 'id_tahun_ajaran');
     }
 }

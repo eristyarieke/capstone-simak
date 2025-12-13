@@ -8,13 +8,22 @@ class Kelas extends Model
 {
     protected $table = 'kelas';
     protected $primaryKey = 'id_kelas';
-    public $timestamps = false;
 
-    protected $fillable = ['nama_kelas', 'wali_kelas'];
+    protected $fillable = [
+        'nama_kelas',
+        'wali_kelas',
+        'id_tahun_ajaran'
+    ];
 
-    public function wali()
+    /* RELATIONS */
+    public function waliKelas()
     {
         return $this->belongsTo(Guru::class, 'wali_kelas');
+    }
+
+    public function tahunAjaran()
+    {
+        return $this->belongsTo(TahunAjaran::class, 'id_tahun_ajaran');
     }
 
     public function siswa()
