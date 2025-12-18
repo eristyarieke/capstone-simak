@@ -10,11 +10,11 @@ class Mapel extends Model
     protected $primaryKey = 'id_mapel';
     public $timestamps = false;
 
-    protected $fillable = ['kode_mapel', 'nama_mapel', 'id_guru'];
+    protected $fillable = ['kode_mapel', 'nama_mapel', 'tahun_ajaran', 'id_guru'];
 
     public function guru()
     {
-        return $this->belongsTo(Guru::class, 'id_guru');
+        return $this->belongsTo(Guru::class, 'id_guru','id_guru');
     }
 
     public function jadwal()

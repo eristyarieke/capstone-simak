@@ -5,7 +5,6 @@
         <div class="role">Administrator</div>
     </div>
 
-    <!-- MENU WRAPPER DITAMBAHKAN DI SINI -->
     <div class="menu-wrapper">
         <div class="menu">
 
@@ -28,12 +27,16 @@
             <a href="#"><i class="fa-solid fa-globe"></i>Kelola Halaman</a>
             <a href="#"><i class="fa-solid fa-laptop"></i>Landing Page</a>
 
-            <a href="#" class="logout-menu">
-                <i class="fa-solid fa-arrow-right-from-bracket"></i>
-                Logout
-            </a>
+            {{-- LOGOUT (INI YANG BENAR) --}}
+            <form action="{{ route('logout') }}" method="POST" style="margin:0;">
+                @csrf
+                <button type="submit" class="logout-menu"
+                    style="background:none;border:none;width:100%;text-align:left;cursor:pointer;">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    Logout
+                </button>
+            </form>
 
         </div>
     </div>
-    <!-- END MENU WRAPPER -->
 </div>

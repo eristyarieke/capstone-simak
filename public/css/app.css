@@ -1,3 +1,114 @@
+/* =============================
+   LOGIN PAGE WRAPPER
+============================= */
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #0B2A4A; 
+    background: linear-gradient(135deg, #0B2A4A 0%, #145A96 100%);
+    padding: 20px;
+}
+
+/* =============================
+   LOGIN CARD
+============================= */
+.login-card {
+    width: 100%;
+    max-width: 400px;
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 35px 32px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.12);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Animasi lembut */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* =============================
+   TITLE
+============================= */
+.login-title {
+    font-size: 24px;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 25px;
+    color: #0B2A4A;
+}
+
+/* =============================
+   INPUT BOX
+============================= */
+.login-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid #cfd6df;
+    font-size: 14px;
+    background: #fafafa;
+    margin-top: 6px;
+    transition: 0.25s;
+}
+
+.login-input:focus {
+    border-color: #145A96;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(30,144,255,0.18);
+}
+
+/* =============================
+   BUTTON
+============================= */
+.login-btn {
+    width: 100%;
+    padding: 12px;
+    background: #1E90FF;
+    color: white;
+    border: none;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.login-btn:hover {
+    background: #0D6EDE;
+}
+
+/* =============================
+   ALERT ERROR
+============================= */
+.login-alert {
+    background: #ffe8e8;
+    color: #b60000;
+    border: 1px solid #ffb6b6;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* =============================
+   RESPONSIVE
+============================= */
+@media(max-width: 480px) {
+    .login-card {
+        padding: 28px 24px;
+    }
+
+    .login-title {
+        font-size: 22px;
+    }
+}
+
 /* ===============================
    GLOBAL BASE & BODY
 =============================== */

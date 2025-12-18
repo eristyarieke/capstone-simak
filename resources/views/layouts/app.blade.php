@@ -11,7 +11,8 @@
 <div class="wrapper">
     
     {{-- Sidebar --}}
-    @include($sidebar)
+    @includeIf($sidebar ?? 'layouts.sidebar-admin')
+
 
     <div class="main-area">
         

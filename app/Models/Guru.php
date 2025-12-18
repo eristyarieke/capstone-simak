@@ -9,15 +9,20 @@ class Guru extends Model
     protected $table = 'guru';
     protected $primaryKey = 'id_guru';
     public $timestamps = false;
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
-        'id_user', 'nip', 'nama', 'jenis_kelamin', 'alamat',
-        'no_hp', 'email', 'foto'
+        'id_user',
+        'nama',
+        'jabatan',
+        'status_kepegawaian',
+
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsTo(User::class, 'id_user','id_user');
     }
 
     public function mapel()
