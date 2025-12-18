@@ -329,12 +329,23 @@ body {
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px 22px;
+    gap: 22px 26px;
+    margin-top: 10px;
 }
 
 .form-group.full {
     grid-column: span 2;
 }
+
+.form-card {
+    width: 100%;
+    max-width: 850px;
+    padding: 25px 30px;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
 
 /* ===============================
    FORM ELEMENTS
@@ -387,6 +398,34 @@ body {
     border-color: #1E90FF;
     box-shadow: 0 0 0 2px rgba(30,144,255,0.18);
 }
+
+.filter-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.filter-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    padding: 8px 12px;
+    width: 220px;
+}
+
+.filter-select {
+    padding: 8px;
+}
+
+.filter-action {
+    white-space: nowrap;
+}
+
 
 /* ===============================
    TABLE

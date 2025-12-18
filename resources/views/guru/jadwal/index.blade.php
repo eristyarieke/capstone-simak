@@ -68,19 +68,10 @@
 
         <button class="btn btn-primary">Terapkan</button>
 
-        <a href="{{ route('jadwal.admin') }}" class="btn btn-light">
+        <a href="{{ route('jadwal.guru') }}" class="btn btn-light">
             Reset
         </a>
     </div>
-
-    {{-- Tombol Tambah --}}
-    <div class="filter-action">
-        <a href="{{ route('jadwal.create') }}" class="btn btn-success">
-            + Tambah Jadwal
-        </a>
-    </div>
-</form>
-
 
     {{-- TABLE --}}
     <div class="table-wrapper" style="margin-top:20px;">

@@ -2,43 +2,20 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Jadwal\JadwalPelajaranController;
-use App\Http\Controllers\auth\AuthController;
-use App\Http\Controllers\Master\SiswaController;
-use App\Http\Controllers\Master\GuruController;
-use App\Http\Controllers\Master\MataPelajaranController;
-use App\Http\Controllers\Master\KelasController;
 
-// Login
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-
-
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', fn () => view('admin.dashboard'))->name('admin.dashboard');
-});
-
-// Dashboard
-
-Route::get('/guru/dashboard', fn () => view('guru.dashboard'))->name('guru.dashboard');
-Route::get('/siswa/dashboard', fn () => view('siswa.dashboard'))->name('siswa.dashboard');
-
-Route::prefix('admin')
-    ->name('admin.')
-    ->middleware(['auth', 'role:admin'])
-    ->group(function () {
-
-        Route::get('/dashboard', function () {
-            return view('admin.dashboard');
-        })->name('dashboard');
-
-        Route::resource('guru', GuruController::class)->except(['show']);
-        Route::resource('siswa', SiswaController::class);
-        Route::resource('mapel', MataPelajaranController::class)->except(['show']);
-});
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
 
-// ADMIN Jadwal
+// ADMIN
 Route::prefix('admin/jadwal')->group(function () {
     Route::get('/', [JadwalPelajaranController::class, 'admin'])->name('jadwal.admin');
     Route::get('/create', [JadwalPelajaranController::class, 'create'])->name('jadwal.create');
@@ -48,13 +25,17 @@ Route::prefix('admin/jadwal')->group(function () {
     Route::delete('/delete/{id}', [JadwalPelajaranController::class, 'destroy'])->name('jadwal.delete');
 });
 
-// GURU jadwal
+// GURU
 Route::get('/guru/jadwal', [JadwalPelajaranController::class, 'guru'])->name('jadwal.guru');
 
-// KEPSEK jadwal
-Route::get('/kepsek/jadwal', [JadwalPelajaranController::class, 'kepsek'])->name('jadwal.kepsek');
+// KEPSEK
+Route::get('/kepsek/jadwal',
+    [JadwalPelajaranController::class, 'kepsek']
+)->name('kepsek.jadwal');
 
-//Admin Kelas
-Route::prefix('admin')->name('admin.')->middleware(['auth','role:admin'])->group(function () {
-    Route::resource('kelas', KelasController::class)->except(['show']);
-});
+Route::get('/kepsek/jadwal/pdf',
+    [JadwalPelajaranController::class, 'exportPdf']
+)->name('kepsek.jadwal.pdf');
+
+
+

@@ -13,14 +13,25 @@ return new class extends Migration
      */
     public function up()
     {
-       Schema::create('guru', function (Blueprint $table) {
+        Schema::create('guru', function (Blueprint $table) {
     $table->increments('id_guru');
     $table->unsignedInteger('id_user');
     $table->string('nama', 100);
+    $table->string('jabatan', 100);
     $table->enum('jenis_kelamin', ['L','P']);
-    $table->enum('agama', ['Islam', 'Kristen', 'Katolik', 'Buddha', 'Hindu', 'Konghucu']);
+    $table->enum('agama', ['Islam','Kristen','Katolik','Hindu','Buddha','Konghucu']);
+    $table->unsignedInteger('id_tahun_ajaran');
+
     $table->foreign('id_user')->references('id_user')->on('users')->onDelete('cascade');
+
+    $table->foreign('id_tahun_ajaran')
+          ->references('id_tahun_ajaran')
+          ->on('tahun_ajaran')
+          ->onDelete('cascade');
+
+    $table->timestamps();
 });
+
     }
 
     /**

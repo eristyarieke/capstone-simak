@@ -13,16 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-       Schema::create('mapel', function (Blueprint $table) {
+        Schema::create('mapel', function (Blueprint $table) {
     $table->increments('id_mapel');
     $table->string('kode_mapel', 20);
     $table->string('nama_mapel', 100);
-    $table->string('tahun_ajaran', 9); // ✅ ganti kkm jadi tahun_ajaran
-    $table->unsignedInteger('id_guru'); // atau ->nullable() kalau mau opsional
+    $table->unsignedInteger('id_tahun_ajaran');
 
-    $table->foreign('id_guru')->references('id_guru')->on('guru');
+    $table->foreign('id_tahun_ajaran')
+          ->references('id_tahun_ajaran')
+          ->on('tahun_ajaran')
+          ->onDelete('cascade');
+
+    $table->timestamps();
 });
-
 
     }
 

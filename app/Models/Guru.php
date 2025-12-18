@@ -8,26 +8,31 @@ class Guru extends Model
 {
     protected $table = 'guru';
     protected $primaryKey = 'id_guru';
-    public $timestamps = false;
-    public $incrementing = true;
-    protected $keyType = 'int';
 
     protected $fillable = [
         'id_user',
         'nama',
         'jabatan',
-        'status_kepegawaian',
-
+        'jenis_kelamin',
+        'agama',
+        'id_tahun_ajaran'
     ];
+
+    /* RELATIONS */
 
     public function user()
     {
-        return $this->belongsTo(User::class, 'id_user','id_user');
+        return $this->belongsTo(User::class, 'id_user');
     }
 
-    public function mapel()
+    public function tahunAjaran()
     {
-        return $this->hasMany(Mapel::class, 'id_guru');
+        return $this->belongsTo(TahunAjaran::class, 'id_tahun_ajaran');
+    }
+
+    public function kelas()
+    {
+        return $this->hasMany(Kelas::class, 'id_guru'); // wali kelas
     }
 
     public function jadwal()
