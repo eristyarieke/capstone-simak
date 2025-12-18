@@ -1,471 +1,120 @@
-/* ===============================
-   GLOBAL BASE & BODY
-=============================== */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #f5f7fa;
-    color: #333;
-}
-
-/* ===============================
-   WRAPPER & MAIN AREA
-=============================== */
-.wrapper {
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
-    background: #f5f7fa;
-}
-
-.main-area {
-    margin-left: 245px;
-    width: calc(100% - 245px);
-    min-height: 100vh;
-}
-
-/* ===============================
-   HEADER
-=============================== */
-.global-header {
-    background: #0B2A4A;
-    padding: 16px 30px;
-    border-bottom: 1px solid rgba(255,255,255,0.15);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-}
-
-.gh-title {
-    font-size: 19px;
-    font-weight: 600;
-    color: #ffffff;
-    margin: 0;
-}
-
-/* ===============================
-   SIDEBAR
-=============================== */
-.sidebar {
-    width: 245px;
-    background: #0B2A4A;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    min-height: 96vh;  
-    height: 96vh; 
-    overflow: hidden; 
-    overflow-y: auto;
-    box-shadow: 2px 0 10px rgba(0,0,0,0.06);
-}
-
-.sidebar .menu-wrapper {
-    flex: 1;
-    overflow-y: auto;
+@layer components {
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+  @apply fixed top-0 left-0 h-screen w-[245px]
+         bg-sidebar text-white
+         overflow-hidden
+         transition-[width] duration-300 ease-in-out;
 }
 
 
-/* Sidebar Profile */
-.sidebar .profile-section {
-    text-align: center;
-    padding: 15px 0;
-}
-
-.sidebar .profile-section img {
-    width: 95px;
-    height: 95px;
-    border-radius: 50%;
-    border: 4px solid #1E90FF;
-    object-fit: cover;
-    background: white;
-}
-
-.sidebar .profile-section .name {
-    font-size: 14px;
-    margin-top: 10px;
-    font-weight: 600;
-}
-
-.sidebar .profile-section .role {
-    font-size: 12px;
-    opacity: .8;
-}
-
-/* Sidebar Menu */
-.sidebar .menu-title {
-    font-size: 11px;
-    opacity: 0.6;
-    padding: 12px 20px 5px;
-    text-transform: uppercase;
-}
-
-.sidebar a {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 11px 20px;
-    text-decoration: none;
-    color: #ffffff;
-    font-size: 13px;
-    transition: 0.25s;
-    border-left: 4px solid transparent;
-}
-
-.sidebar a i {
-    width: 18px;
-    text-align: center;
-}
-
-.sidebar a:hover {
-    background: rgba(255,255,255,0.08);
-    border-left: 4px solid #1E90FF;
-}
-
-.sidebar a.active {
-    background: rgba(255,255,255,0.12);
-    border-left: 4px solid #1E90FF;
-    font-weight: 600;
+.sidebar-collapsed {
+  @apply w-[60px];
 }
 
 
-/* Garis pembatas atas */
-.logout-menu {
-    border-top: 1px solid rgba(255,255,255,0.2);
-    margin-top: 15px;
-    padding-top: 15px;
+  .sidebar-collapsed .sidebar-text {
+    @apply hidden;
+  }
+
+  .sidebar-collapsed .menu-item {
+  @apply justify-center px-0;
 }
 
-/* Hover merah hanya untuk logout */
-.logout-menu:hover {
-    background: rgba(255, 0, 0, 0.15);
-    border-left: 4px solid #ff4d4d;
-    color: #ff4d4d;
+.sidebar-collapsed .menu-item + .menu-item {
+  @apply mt-2;
 }
 
-.logout-menu:hover i {
-    color: #ff4d4d;
+.sidebar-collapsed .menu-icon {
+  @apply w-10 flex justify-center; 
+  margin-top: 5px;
 }
 
-
-/* ===============================
-   CONTENT AREA
-=============================== */
-.content {
-    padding: 25px 35px;
-    max-width: 900px;
-    margin: auto;
+.sidebar-collapsed .menu-icon i {
+  @apply text-lg;
 }
 
-.content-header {
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: #0B2A4A;
+  /* ===== APP WRAPPER ===== */
+  #app-wrapper {
+  padding-left: 245px;
+  transition: padding-left 0.3s ease;
 }
 
-/* ===============================
-   SUBTITLE
-=============================== */
-.sub-title {
-    font-size: 20px;
-    font-weight: 600;
-    color: #1E90FF;
+#app-wrapper.app-collapsed {
+  padding-left: 72px;
 }
 
-.sub-desc {
-    margin-top: 4px;
-    color: #666;
+  /* ===== MENU ITEM ===== */
+  .menu-item {
+    @apply flex items-center
+           h-11
+           px-4
+           text-sm text-white/80
+           transition-colors
+           hover:bg-sidebarHover hover:text-white;
+  }
+
+  /* ICON COLUMN (FIXED WIDTH) */
+  .menu-icon {
+    @apply w-10 flex justify-center shrink-0;
+  }
+
+  /* ACTIVE STATE (RESPONSIF) */
+  .menu-active {
+    @apply bg-primary text-white font-semibold;
+  }
+
+  .menu-logout {
+  @apply text-white/70;
 }
 
-/* ===============================
-   CARD
-=============================== */
-.card {
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 12px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-    margin-top: 20px;
+.menu-logout:hover {
+  @apply bg-red-600 text-white;
 }
 
-/* FORM CARD (FULL WIDTH) */
-.form-card,
-.form-card.full-width {
-    width: 100% !important;
-    max-width: 850px !important;
-    margin: 0 auto !important;
-    padding: 22px 26px;
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+.menu-logout:hover .menu-icon i {
+  @apply text-white;
 }
 
-/* ===============================
-   GRID LAYOUT
-=============================== */
-.form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 22px 26px;
-    margin-top: 10px;
-}
+  /* SECTION TITLE */
+  .menu-section {
+    @apply px-6 mt-6 mb-2
+           text-[11px] uppercase tracking-wider
+           text-white/50;
+  }
 
-.form-group.full {
-    grid-column: span 2;
-}
+  /* ===== BUTTON ===== */
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded text-sm font-semibold hover:opacity-90;
+  }
 
-.form-card {
-    width: 100%;
-    max-width: 850px;
-    padding: 25px 30px;
-    border-radius: 12px;
-    background: #fff;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
+  .btn-success {
+    @apply bg-success text-white px-4 py-2 rounded text-sm font-semibold hover:opacity-90;
+  }
 
+  .btn-light {
+    @apply bg-gray-100 text-gray-700 px-4 py-2 rounded text-sm hover:bg-gray-200;
+  }
 
-/* ===============================
-   FORM ELEMENTS
-=============================== */
-.form-group {
-    display: flex;
-    flex-direction: column;
-}
+  /* ===== FORM ===== */
+  .input {
+    @apply border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary;
+  }
 
-.form-group label,
-.form-card label {
-    font-weight: 600;
-    margin-bottom: 4px;
-    color: #2b2b2b;
-}
+  /* ===== TABLE ===== */
+  .table {
+    @apply w-full text-sm border border-gray-200;
+  }
 
-.form-control,
-.form-card input,
-.form-card select {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #cfd6df;
-    background: #fafafa;
-    transition: 0.2s;
-}
+  .table th {
+    @apply bg-gray-100 text-left px-4 py-3 font-semibold;
+  }
 
-.form-control:focus,
-.form-card input:focus,
-.form-card select:focus {
-    border-color: #1E90FF;
-    background: #fff;
-    box-shadow: 0 0 0 2px rgba(30,144,255,0.2);
-}
-
-/* ===============================
-   SEARCH BOX
-=============================== */
-.search-box {
-    width: 100%;
-    max-width: 480px;
-    border: 1px solid #d0d7de;
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 14px;
-    transition: .2s;
-}
-
-.search-box:focus {
-    border-color: #1E90FF;
-    box-shadow: 0 0 0 2px rgba(30,144,255,0.18);
-}
-
-/* ===============================
-   TABLE
-=============================== */
-.table-wrapper {
-    overflow-x: auto;
-}
-
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table th {
-    background: #eef1f6;
-    padding: 12px;
-    font-size: 13px;
-    border-bottom: 1px solid #dfe4ea;
-    color: #0B2A4A;
-}
-
-.table td {
-    padding: 12px;
-    font-size: 13px;
-    border-bottom: 1px solid #f1f3f5;
-}
-
-.table tr:hover {
-    background: #f8fafc;
-}
-
-/* ===============================
-   BUTTONS
-=============================== */
-.btn {
-    padding: 8px 16px;
-    border-radius: 7px;
-    font-size: 13px;
-    cursor: pointer;
-    border: none;
-    transition: 0.25s;
-}
-
-.btn-primary {
-    background: #1E90FF;
-    color: white;
-}
-.btn-primary:hover {
-    background: #0D6EDE;
-}
-
-.btn-secondary {
-    background: #6c757d;
-    color: white;
-}
-.btn-secondary:hover {
-    background: #565e64;
-}
-
-.btn-edit {
-    background: #fce300;
-    color: white;
-}
-
-.btn-danger {
-    background: #d9534f;
-    color: white;
-}
-
-/* Tombol aksi icon-only */
-.icon-btn {
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 6px;
-    cursor: pointer;
-    border: none;
-    font-size: 14px;
-}
-
-/* Edit */
-.icon-edit {
-    background: #ffeb3b;
-    color: #000;
-}
-
-.icon-edit:hover {
-    background: #ffe033;
-}
-
-/* Delete */
-.icon-delete {
-    background: #d9534f;
-    color: #fff;
-}
-
-.icon-delete:hover {
-    background: #c9302c;
-}
-
-/* Modern Buttons */
-.form-buttons {
-    justify-content: flex-end;
-}
-
-.form-buttons,
-.action-buttons {
-    display: flex;
-    gap: 12px;
-    margin-top: 25px;
-}
-
-.action-buttons {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-}
-
-.btn-custom,
-.btn-modern {
-    padding: 12px 0;
-    border-radius: 10px;
-    font-weight: 600;
-    border: none;
-    transition: 0.2s;
-}
-
-.btn-blue {
-    background: #0B4F9D;
-    color: #fff;
-}
-.btn-blue:hover {
-    background: #093f7b;
-}
-
-.btn-gray,
-.btn-grey {
-    background: #9a9a9a;
-    color: white;
-}
-.btn-gray:hover,
-.btn-grey:hover {
-    background: #818181;
-}
-
-/* ===============================
-   ALERT
-=============================== */
-.alert-danger {
-    background: #ffe8e8;
-    color: #b60000;
-    border: 1px solid #ffb6b6;
-    padding: 14px 20px;
-    border-radius: 8px;
-    margin-bottom: 18px;
-    font-size: 14px;
-}
-
-/* ===============================
-   RESPONSIVE
-=============================== */
-@media(max-width: 600px){
-    .main-area {
-        margin-left: 0;
-        width: 100%;
-    }
-
-    .sidebar {
-        display: none;
-    }
-
-    .card {
-        padding: 18px;
-    }
-
-    .btn {
-        width: 100%;
-        margin-top: 8px;
-    }
+  .table td {
+    @apply px-4 py-3 border-t;
+  }
 }

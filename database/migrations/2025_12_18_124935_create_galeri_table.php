@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('prestasi', function (Blueprint $table) {
+        Schema::create('galeri', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_prestasi');
-            $table->string('tingkat'); // contoh: lokal, nasional
-            $table->string('tahun', 4);
-            $table->string('gambar')->nullable();
-            $table->text('deskripsi')->nullable();
+            $table->string('judul')->nullable();
+            $table->string('foto');
+            $table->enum('kategori', ['kegiatan','prestasi','umum']);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('prestasi');
+        Schema::dropIfExists('galeri');
     }
 };

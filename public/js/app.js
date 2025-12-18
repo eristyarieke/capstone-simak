@@ -8,3 +8,5 @@ document.addEventListener('DOMContentLoaded', () => {
         wrapper.classList.toggle('app-collapsed');
     });
 });
+
+console.log('clicked');

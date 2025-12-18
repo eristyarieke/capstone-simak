@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->text('isi');
-            $table->date('tanggal');
-            $table->string('gambar')->nullable();
+            $table->date('tanggal')->nullable();
+            $table->enum('status', ['tampil','arsip'])->default('tampil');
             $table->timestamps();
         });
     }

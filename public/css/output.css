@@ -567,49 +567,27 @@ video {
   background-color: rgb(31 41 55 / var(--tw-bg-opacity, 1));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-  transition-property: width;
-  transition-duration: 300ms;
+  transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 
 .sidebar-collapsed {
-  width: 60px;
+  width: 72px;
 }
 
 .sidebar-collapsed .sidebar-text {
   display: none;
 }
 
-.sidebar-collapsed .menu-item {
-  justify-content: center;
-  padding-left: 0px;
-  padding-right: 0px;
-}
-
-.sidebar-collapsed .menu-item + .menu-item {
-  margin-top: 0.5rem;
-}
-
-.sidebar-collapsed .menu-icon {
-  display: flex;
-  width: 2.5rem;
-  justify-content: center;
-  margin-top: 5px;
-}
-
-.sidebar-collapsed .menu-icon i {
-  font-size: 1.125rem;
-  line-height: 1.75rem;
-}
-
 /* ===== APP WRAPPER ===== */
 
-#app-wrapper {
+.app-wrapper {
   padding-left: 245px;
-  transition: padding-left 0.3s ease;
+  transition: padding-left 300ms ease;
 }
 
-#app-wrapper.app-collapsed {
+.app-wrapper.app-collapsed {
   padding-left: 72px;
 }
 
@@ -655,20 +633,16 @@ video {
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
 }
 
-.menu-logout {
-  color: rgb(255 255 255 / 0.7);
+/* Saat collapsed → tetap center, tidak geser */
+
+.sidebar-collapsed .menu-item {
+  justify-content: center;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
-.menu-logout:hover {
-  --tw-bg-opacity: 1;
-  background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
-}
-
-.menu-logout:hover .menu-icon i {
-  --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+.sidebar-collapsed .menu-icon {
+  width: 100%;
 }
 
 /* SECTION TITLE */
@@ -816,10 +790,6 @@ video {
   margin-left: auto;
 }
 
-.mt-6 {
-  margin-top: 1.5rem;
-}
-
 .flex {
   display: flex;
 }
@@ -834,6 +804,10 @@ video {
 
 .h-12 {
   height: 3rem;
+}
+
+.h-28 {
+  height: 7rem;
 }
 
 .min-h-screen {
@@ -872,8 +846,8 @@ video {
   align-items: center;
 }
 
-.gap-1 {
-  gap: 0.25rem;
+.justify-center {
+  justify-content: center;
 }
 
 .gap-2 {
@@ -912,10 +886,6 @@ video {
   border-bottom-width: 1px;
 }
 
-.border-t {
-  border-top-width: 1px;
-}
-
 .border-white\/10 {
   border-color: rgb(255 255 255 / 0.1);
 }
@@ -952,10 +922,6 @@ video {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-}
-
-.pt-4 {
-  padding-top: 1rem;
 }
 
 .text-center {

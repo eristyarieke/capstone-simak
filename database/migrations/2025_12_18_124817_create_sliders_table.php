@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kontak', function (Blueprint $table) {
+        Schema::create('sliders', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->string('email');
-            $table->string('subjek')->nullable();
-            $table->text('pesan');
+            $table->string('judul');
+            $table->string('subjudul')->nullable();
+            $table->string('gambar')->nullable();
+            $table->enum('status', ['aktif','nonaktif'])->default('aktif');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kontak');
+        Schema::dropIfExists('sliders');
     }
 };
