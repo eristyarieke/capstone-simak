@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard Admin</title>
-</head>
-<body>
+@extends('layouts.app')
 
-<h1>Selamat Datang di Dashboard Admin</h1>
+@section('content')
+<div class="container">
+  <h3>Dashboard Admin</h3>
 
-<p>Anda berhasil login sebagai <strong>Admin</strong>.</p>
-
-</body>
-</html>
+  <form action="{{ route('logout') }}" method="POST">
+    @csrf
+    <button class="btn btn-danger">Logout</button>
+  </form>
+</div>
+@endsection

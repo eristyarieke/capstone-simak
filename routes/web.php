@@ -14,6 +14,23 @@ use App\Http\Controllers\Jadwal\JadwalPelajaranController;
 |
 */
 
+use App\Http\Controllers\Auth\AuthController;
+
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
+});
+
+Route::middleware(['auth','role:guru'])->prefix('guru')->name('guru.')->group(function () {
+    Route::get('/dashboard', fn() => view('guru.dashboard'))->name('dashboard');
+});
+
+Route::middleware(['auth','role:kepala_sekolah'])->prefix('kepsek')->name('kepsek.')->group(function () {
+    Route::get('/dashboard', fn() => view('kepsek.dashboard'))->name('dashboard');
+});
 
 // ADMIN
 Route::prefix('admin/jadwal')->group(function () {
@@ -37,5 +54,13 @@ Route::get('/kepsek/jadwal/pdf',
     [JadwalPelajaranController::class, 'exportPdf']
 )->name('kepsek.jadwal.pdf');
 
+Route::prefix('admin/siswa')->group(function () {
+    Route::get('/', [SisController::class, 'admin'])->name('jadwal.admin');
+    Route::get('/create', [JadwalPelajaranController::class, 'create'])->name('jadwal.create');
+    Route::post('/store', [JadwalPelajaranController::class, 'store'])->name('jadwal.store');
+    Route::get('/edit/{id}', [JadwalPelajaranController::class, 'edit'])->name('jadwal.edit');
+    Route::match(['put','patch'], '/update/{id}', [JadwalPelajaranController::class, 'update'])->name('jadwal.update');
+    Route::delete('/delete/{id}', [JadwalPelajaranController::class, 'destroy'])->name('jadwal.delete');
+});
 
 
