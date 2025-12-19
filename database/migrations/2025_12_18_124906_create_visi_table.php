@@ -13,13 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kelas', function (Blueprint $table) {
-    $table->increments('id_kelas');
-    $table->string('nama_kelas', 50);
-    $table->unsignedInteger('wali_kelas');
-    $table->foreign('wali_kelas')->references('id_guru')->on('guru')->onDelete('cascade');
-});
-
+        Schema::create('visi', function (Blueprint $table) {
+            $table->id();
+            $table->text('isi_visi');
+        });
     }
 
     /**
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kelas');
+        Schema::dropIfExists('visi');
     }
 };

@@ -13,21 +13,25 @@ return new class extends Migration
      */
     public function up()
     {
-       Schema::create('siswa', function (Blueprint $table) {
-    $table->increments('id_siswa');
-    $table->unsignedInteger('id_user');
-    $table->string('nis', 20);
-    $table->string('nama', 100);
-    $table->enum('jenis_kelamin', ['L','P']);
-    $table->date('tanggal_lahir');
-    $table->text('alamat');
-    $table->string('no_hp', 20);
-    $table->unsignedInteger('id_kelas');
-    $table->year('tahun_masuk');
-    $table->string('foto', 255)->nullable();
 
-    $table->foreign('id_user')->references('id_user')->on('users');
-    $table->foreign('id_kelas')->references('id_kelas')->on('kelas');
+    Schema::create('siswa', function (Blueprint $table) {
+    $table->increments('id_siswa');
+    $table->string('nama', 100);
+    $table->string('jenis_kelamin', 10);
+    $table->enum('agama', ['Islam','Kristen','Katolik','Hindu','Buddha','Konghucu']);
+    $table->unsignedInteger('id_kelas');
+    $table->unsignedInteger('id_tahun_ajaran');
+
+    $table->foreign('id_kelas')
+          ->references('id_kelas')
+          ->on('kelas');
+
+    $table->foreign('id_tahun_ajaran')
+          ->references('id_tahun_ajaran')
+          ->on('tahun_ajaran')
+          ->onDelete('cascade');
+
+    $table->timestamps();
 });
 
     }

@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('mapel', function (Blueprint $table) {
-    $table->increments('id_mapel');
-    $table->string('kode_mapel', 20);
-    $table->string('nama_mapel', 100);
-    $table->unsignedInteger('id_guru');
-
-    $table->foreign('id_guru')->references('id_guru')->on('guru');
-});
-
+        Schema::create('misi', function (Blueprint $table) {
+            $table->id();
+            $table->text('isi_misi');
+        });
     }
 
     /**
@@ -31,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mapel');
+        Schema::dropIfExists('misi');
     }
 };

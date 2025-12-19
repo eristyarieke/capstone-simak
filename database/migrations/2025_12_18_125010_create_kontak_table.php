@@ -13,17 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('profile_sekolah', function (Blueprint $table) {
+        Schema::create('kontak', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_sanggar');
-            $table->text('deskripsi');
-            $table->string('logo')->nullable();
-            $table->string('alamat')->nullable();
-            $table->string('telepon')->nullable();
+            $table->text('alamat')->nullable();
             $table->string('email')->nullable();
-            $table->string('facebook')->nullable();
+            $table->string('telepon')->nullable();
             $table->string('instagram')->nullable();
-            $table->timestamps();
+            $table->string('youtube')->nullable();
+            $table->string('website')->nullable();
         });
     }
 
@@ -34,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profile_sekolah');
+        Schema::dropIfExists('kontak');
     }
 };

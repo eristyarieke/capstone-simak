@@ -13,14 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('artikel_berita', function (Blueprint $table) {
+        Schema::create('profil_sekolah', function (Blueprint $table) {
             $table->id();
-            $table->string('judul');
-            $table->string('slug')->unique();
-            $table->string('penulis')->nullable();
-            $table->text('konten');
-            $table->string('gambar')->nullable();
-            $table->date('tanggal_publish')->nullable();
+            $table->text('deskripsi');
+            $table->string('logo')->nullable();
+            $table->string('foto_gedung')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('artikel_berita');
+        Schema::dropIfExists('profil_sekolah');
     }
 };

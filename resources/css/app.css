@@ -1,249 +1,127 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-    background: #f4f5f7;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  /* ===== SIDEBAR ===== */
+  .sidebar {
+  @apply fixed top-0 left-0 h-screen w-[245px]
+         bg-sidebar text-white
+         overflow-hidden
+         transition-[width] duration-300 ease-in-out;
 }
 
-.wrapper {
-    display: flex;
-    width: 100%;
-    min-height: 100vh;
+
+.sidebar-collapsed {
+  @apply w-[60px];
 }
 
-.main-area {
-    margin-left: 230px;
-    width: calc(100% - 230px);
-    min-height: 100vh;
+
+  .sidebar-collapsed .sidebar-text {
+    @apply hidden;
+  }
+
+  .sidebar-collapsed .menu-item {
+  @apply justify-center px-0;
 }
 
-/* ============================
-        GLOBAL HEADER
-============================ */
-.global-header {
-    background: #0B2A4A;
-    padding: 15px 25px;
-    border-bottom: 1px solid #1c1c1c;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+.sidebar-collapsed .menu-item + .menu-item {
+  @apply mt-2;
 }
 
-.gh-title {
-    font-size: 18px;
-    font-weight: 600;
-    margin: 0;
-    color: #ffffff;
+.sidebar-collapsed .menu-icon {
+  @apply w-10 flex justify-center; 
+  margin-top: 5px;
 }
 
-/* ============================
-            SIDEBAR
-============================ */
-.sidebar {
-    width: 230px;
-    background: #0B2A4A;
-    color: white;
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    overflow-y: auto;
+.sidebar-collapsed .menu-icon i {
+  @apply text-lg;
 }
 
-.sidebar .profile-section {
-    text-align: center;
-    padding: 10px 0;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+.sidebar-collapsed .menu-active {
+  @apply bg-primary;
 }
 
-.sidebar .profile-section img {
-    width: 95px;
-    height: 95px;
-    border-radius: 50%;
-    border: 4px solid #1e5aac;
-    object-fit: cover;
+
+  /* ===== APP WRAPPER ===== */
+  #app-wrapper {
+  padding-left: 245px;
+  transition: padding-left 0.3s ease;
 }
 
-.sidebar .profile-section .name {
-    font-size: 14px;
-    margin-top: 8px;
-    font-weight: 600;
+#app-wrapper.app-collapsed {
+  padding-left: 72px;
 }
 
-.sidebar .profile-section .role {
-    font-size: 12px;
-    opacity: .8;
+  /* ===== MENU ITEM ===== */
+  .menu-item {
+  @apply flex items-center
+         w-full
+         h-11
+         px-4
+         text-sm text-white/80
+         transition-colors
+         hover:bg-sidebarHover hover:text-white;
 }
 
-.sidebar .menu {
-    margin-top: 15px;
+  /* ICON COLUMN (FIXED WIDTH) */
+  .menu-icon {
+    @apply w-10 flex justify-center shrink-0;
+  }
+
+  /* ACTIVE STATE (RESPONSIF) */
+  .menu-active {
+    @apply bg-primary text-white font-semibold;
+  }
+
+  .menu-logout {
+  @apply text-white/70;
 }
 
-.sidebar .menu-title {
-    font-size: 11px;
-    text-transform: uppercase;
-    opacity: 0.6;
-    padding: 10px 20px;
+.menu-logout:hover {
+  @apply bg-red-600 text-white;
 }
 
-.sidebar a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 20px;
-    text-decoration: none;
-    color: white;
-    font-size: 13px;
-    transition: 0.3s;
-    border-left: 4px solid transparent;
+.menu-logout:hover .menu-icon i {
+  @apply text-white;
 }
 
-.sidebar a:hover {
-    background: #123a65;
-    border-left: 4px solid #1E90FF;
-}
 
-.sidebar a.active {
-    background: #123a65;
-    border-left: 4px solid #1E90FF;
-    font-weight: 600;
-}
+  /* SECTION TITLE */
+  .menu-section {
+    @apply px-6 mt-6 mb-2
+           text-[11px] uppercase tracking-wider
+           text-white/50;
+  }
 
-.sidebar a i {
-    width: 18px;
-    text-align: center;
-}
+  /* ===== BUTTON ===== */
+  .btn-primary {
+    @apply bg-primary text-white px-4 py-2 rounded text-sm font-semibold hover:opacity-90;
+  }
 
-/* ============================
-            CONTENT
-============================ */
-.content {
-    flex: 1;
-    padding: 30px 35px;
-}
+  .btn-success {
+    @apply bg-success text-white px-4 py-2 rounded text-sm font-semibold hover:opacity-90;
+  }
 
-.content-header {
-    font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 20px;
-}
+  .btn-light {
+    @apply bg-gray-100 text-gray-700 px-4 py-2 rounded text-sm hover:bg-gray-200;
+  }
 
-/* ============================
-              CARD
-============================ */
-.card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-}
+  /* ===== FORM ===== */
+  .input {
+    @apply border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary;
+  }
 
-.search-box {
-    width: 100%;
-    max-width: 450px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 8px 15px;
-    font-size: 14px;
-    margin-bottom: 15px;
-}
+  /* ===== TABLE ===== */
+  .table {
+    @apply w-full text-sm border border-gray-200;
+  }
 
-/* ============================
-             TABLE
-============================ */
-.table-wrapper {
-    overflow-x: auto;
-}
+  .table th {
+    @apply bg-gray-100 text-left px-4 py-3 font-semibold;
+  }
 
-.table {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-.table th {
-    background: #f0f2f5;
-    padding: 10px;
-    font-size: 13px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-.table td {
-    padding: 10px;
-    font-size: 13px;
-    border-bottom: 1px solid #eee;
-}
-
-.table tr:hover {
-    background: #f6f8fa;
-}
-
-/* ============================
-              BUTTONS
-============================ */
-/* Wrapper tombol aksi agar rapi */
-.action-buttons {
-    display: flex;
-    gap: 6px;              /* Jarak antar tombol */
-    align-items: center;
-}
-
-/* Tombol edit */
-.btn-edit {
-    background: #ffe600 !important;
-    color: #000 !important;
-    border: none;
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-.btn-edit:hover {
-    background: #ffda00 !important;
-}
-
-/* Tombol hapus */
-.btn-delete {
-    background: #d9534f !important;
-    border: none;
-    padding: 3px 10px;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: 0.2s;
-}
-
-.btn-delete:hover {
-    background: #c9302c !important;
-}
-
-.btn {
-    padding: 7px 15px;
-    border-radius: 6px;
-    font-size: 13px;
-    border: none;
-    cursor: pointer;
-}
-
-.btn-primary {
-    background: #1E90FF;
-    color: white;
-}
-
-.btn-danger {
-    background: #d9534f;
-    color: white;
-}
-
-.btn-edit {
-    background: #0275d8;
-    color: white;
-}
-
-.btn-sm {
-    padding: 5px 10px;
-    font-size: 12px;
+  .table td {
+    @apply px-4 py-3 border-t;
+  }
 }

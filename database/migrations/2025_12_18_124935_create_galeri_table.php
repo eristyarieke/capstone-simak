@@ -13,13 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('kegiatan', function (Blueprint $table) {
+        Schema::create('galeri', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_kegiatan');
-            $table->date('tanggal');
-            $table->string('lokasi')->nullable();
-            $table->string('gambar')->nullable();
-            $table->text('deskripsi')->nullable();
+            $table->string('judul')->nullable();
+            $table->string('foto');
+            $table->enum('kategori', ['kegiatan','prestasi','umum']);
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('kegiatan');
+        Schema::dropIfExists('galeri');
     }
 };
