@@ -9,7 +9,17 @@
 
 <body class="bg-gray-100 min-h-screen">
 
-    @include($sidebar)
+    @auth
+        @php $role = auth()->user()->role; @endphp
+
+        @if ($role === 'admin')
+            @include('layouts.sidebar-admin')
+        @elseif ($role === 'guru')
+            @include('layouts.sidebar-guru')
+        @elseif ($role === 'kepala_sekolah')
+            @include('layouts.sidebar-kepsek')
+        @endif
+    @endauth
 
     <!-- APP WRAPPER -->
     <div id="app-wrapper" class="app-wrapper min-h-screen flex flex-col">

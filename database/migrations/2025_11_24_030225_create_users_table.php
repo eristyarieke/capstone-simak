@@ -17,7 +17,7 @@ return new class extends Migration
     $table->increments('id_user');
     $table->string('username', 50);
     $table->string('password', 255);
-    $table->enum('role', ['admin','guru','siswa']);
+    $table->enum('role', ['admin','guru','kepsek']);
     $table->enum('status', ['aktif','nonaktif']);
     $table->timestamps();
 });

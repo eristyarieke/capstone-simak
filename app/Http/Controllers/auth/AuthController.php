@@ -1,69 +1,71 @@
 <?php
 
-namespace App\Http\Controllers\auth;
+namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    // Tampilkan form login
+    /* =====================
+       FORM LOGIN
+    ===================== */
     public function showLogin()
     {
         return view('auth.login');
     }
 
+    /* =====================
+       PROSES LOGIN
+    ===================== */
     public function login(Request $request)
     {
-        // Validasi input
-        $request->validate([
+        $credentials = $request->validate([
             'username' => 'required',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
-        // Cari user berdasarkan username
-        $user = User::where('username', $request->username)->first();
+        // hanya user aktif yang boleh login
+        $credentials['status'] = 'aktif';
 
-        // Cek jika user tidak ditemukan
-        if (!$user) {
-            return back()->with('error', 'Username tidak ditemukan.');
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors([
+                'username' => 'Username atau password salah',
+            ]);
         }
 
-        // Cek password (hash)
-        if (!Hash::check($request->password, $user->password)) {
-            return back()->with('error', 'Password salah.');
-        }
-
-        // Cek status user
-        if ($user->status === 'nonaktif') {
-            return back()->with('error', 'Akun ini dinonaktifkan.');
-        }
-
-        // ✅ LOGIN PAKAI LARAVEL AUTH, BUKAN SESSION MANUAL
-        Auth::login($user);
         $request->session()->regenerate();
 
-        // Redirect ke dashboard sesuai role
-        if ($user->role == 'admin') {
-            return redirect()->route('admin.dashboard');
-        } elseif ($user->role == 'guru') {
-            return redirect()->route('guru.dashboard');
-        } else {
-            return redirect()->route('siswa.dashboard');
-        }
+        $role = Auth::user()->role;
+
+        return match ($role) {
+            'admin'  => redirect()->route('admin.dashboard'),
+            'guru'   => redirect()->route('guru.dashboard'),
+            'kepsek' => redirect()->route('kepsek.dashboard'),
+            default  => $this->logoutAndFail($request),
+        };
     }
 
+    /* =====================
+       LOGOUT
+    ===================== */
     public function logout(Request $request)
     {
-        // ✅ LOGOUT PAKAI AUTH
         Auth::logout();
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login')->with('success', 'Logout berhasil.');
+        return redirect()->route('login');
+    }
+
+    private function logoutAndFail(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+
+        return redirect()->route('login')
+            ->withErrors(['role' => 'Role tidak valid']);
     }
 }

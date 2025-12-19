@@ -38,6 +38,11 @@
   @apply text-lg;
 }
 
+.sidebar-collapsed .menu-active {
+  @apply bg-primary;
+}
+
+
   /* ===== APP WRAPPER ===== */
   #app-wrapper {
   padding-left: 245px;
@@ -50,13 +55,14 @@
 
   /* ===== MENU ITEM ===== */
   .menu-item {
-    @apply flex items-center
-           h-11
-           px-4
-           text-sm text-white/80
-           transition-colors
-           hover:bg-sidebarHover hover:text-white;
-  }
+  @apply flex items-center
+         w-full
+         h-11
+         px-4
+         text-sm text-white/80
+         transition-colors
+         hover:bg-sidebarHover hover:text-white;
+}
 
   /* ICON COLUMN (FIXED WIDTH) */
   .menu-icon {
@@ -79,6 +85,7 @@
 .menu-logout:hover .menu-icon i {
   @apply text-white;
 }
+
 
   /* SECTION TITLE */
   .menu-section {

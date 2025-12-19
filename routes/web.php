@@ -1,66 +1,84 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Jadwal\JadwalPelajaranController;
+use App\Http\Controllers\Auth\AuthController;
 
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| AUTH
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
 */
-
-use App\Http\Controllers\Auth\AuthController;
-
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth','role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/dashboard', fn() => view('admin.dashboard'))->name('dashboard');
-});
+/*
+|--------------------------------------------------------------------------
+| ADMIN
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth','role:admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
 
-Route::middleware(['auth','role:guru'])->prefix('guru')->name('guru.')->group(function () {
-    Route::get('/dashboard', fn() => view('guru.dashboard'))->name('dashboard');
-});
+        Route::get('/dashboard', [DashboardController::class, 'admin'])
+            ->name('dashboard');
 
-Route::middleware(['auth','role:kepala_sekolah'])->prefix('kepsek')->name('kepsek.')->group(function () {
-    Route::get('/dashboard', fn() => view('kepsek.dashboard'))->name('dashboard');
-});
+        Route::get('/jadwal', [JadwalPelajaranController::class, 'admin'])
+            ->name('jadwal');
 
-// ADMIN
-Route::prefix('admin/jadwal')->group(function () {
-    Route::get('/', [JadwalPelajaranController::class, 'admin'])->name('jadwal.admin');
-    Route::get('/create', [JadwalPelajaranController::class, 'create'])->name('jadwal.create');
-    Route::post('/store', [JadwalPelajaranController::class, 'store'])->name('jadwal.store');
-    Route::get('/edit/{id}', [JadwalPelajaranController::class, 'edit'])->name('jadwal.edit');
-    Route::match(['put','patch'], '/update/{id}', [JadwalPelajaranController::class, 'update'])->name('jadwal.update');
-    Route::delete('/delete/{id}', [JadwalPelajaranController::class, 'destroy'])->name('jadwal.delete');
-});
+        Route::get('/jadwal/create', [JadwalPelajaranController::class, 'create'])
+            ->name('jadwal.create');
 
-// GURU
-Route::get('/guru/jadwal', [JadwalPelajaranController::class, 'guru'])->name('jadwal.guru');
+        Route::post('/jadwal/store', [JadwalPelajaranController::class, 'store'])
+            ->name('jadwal.store');
 
-// KEPSEK
-Route::get('/kepsek/jadwal',
-    [JadwalPelajaranController::class, 'kepsek']
-)->name('kepsek.jadwal');
+        Route::get('/jadwal/{id}/edit', [JadwalPelajaranController::class, 'edit'])
+            ->name('jadwal.edit');
 
-Route::get('/kepsek/jadwal/pdf',
-    [JadwalPelajaranController::class, 'exportPdf']
-)->name('kepsek.jadwal.pdf');
+        Route::put('/jadwal/{id}/update', [JadwalPelajaranController::class, 'update'])
+            ->name('jadwal.update');
 
-Route::prefix('admin/siswa')->group(function () {
-    Route::get('/', [SisController::class, 'admin'])->name('jadwal.admin');
-    Route::get('/create', [JadwalPelajaranController::class, 'create'])->name('jadwal.create');
-    Route::post('/store', [JadwalPelajaranController::class, 'store'])->name('jadwal.store');
-    Route::get('/edit/{id}', [JadwalPelajaranController::class, 'edit'])->name('jadwal.edit');
-    Route::match(['put','patch'], '/update/{id}', [JadwalPelajaranController::class, 'update'])->name('jadwal.update');
-    Route::delete('/delete/{id}', [JadwalPelajaranController::class, 'destroy'])->name('jadwal.delete');
-});
+        Route::delete('/jadwal/{id}/delete', [JadwalPelajaranController::class, 'destroy'])
+            ->name('jadwal.delete');
+    });
 
+/*
+|--------------------------------------------------------------------------
+| GURU
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth','role:guru'])
+    ->prefix('guru')
+    ->name('guru.')
+    ->group(function () {
 
+        Route::get('/dashboard', [DashboardController::class, 'guru'])
+            ->name('dashboard');
+
+        Route::get('/jadwal', [JadwalPelajaranController::class, 'guru'])
+            ->name('jadwal');
+    });
+
+/*
+|--------------------------------------------------------------------------
+| KEPALA SEKOLAH
+|--------------------------------------------------------------------------
+*/
+Route::middleware(['auth','role:kepsek'])
+    ->prefix('kepsek')
+    ->name('kepsek.')
+    ->group(function () {
+
+        Route::get('/dashboard', [DashboardController::class, 'kepsek'])
+            ->name('dashboard');
+
+        Route::get('/jadwal', [JadwalPelajaranController::class, 'kepsek'])
+            ->name('jadwal');
+
+        Route::get('/jadwal/export/pdf', [JadwalPelajaranController::class, 'exportPdf'])
+            ->name('jadwal.export.pdf');
+    });
