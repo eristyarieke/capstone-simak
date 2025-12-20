@@ -3,7 +3,7 @@
 @section('content')
 
 <h2 class="text-xl font-bold text-gray-800 mb-6">
-    Data Kelas
+    Data Mata Pelajaran
 </h2>
 
 <div class="bg-white rounded-lg shadow p-6">
@@ -14,19 +14,19 @@
             type="text"
             name="search"
             value="{{ request('search') }}"
-            placeholder="Cari kelas atau wali kelas..."
+            placeholder="Cari kode atau nama mapel..."
             class="input w-64"
         >
 
         <button class="btn-primary">Cari</button>
 
-        <a href="{{ route('admin.kelas') }}" class="btn-light">
+        <a href="{{ route('admin.mapel') }}" class="btn-light">
             Reset
         </a>
 
         <div class="ml-auto">
-            <a href="{{ route('admin.kelas.create') }}" class="btn-success">
-                + Tambah Kelas
+            <a href="{{ route('admin.mapel.create') }}" class="btn-success">
+                + Tambah Mapel
             </a>
         </div>
     </form>
@@ -37,27 +37,27 @@
             <thead>
                 <tr>
                     <th>No</th>
-                    <th>Nama Kelas</th>
-                    <th>Wali Kelas</th>
+                    <th>Kode</th>
+                    <th>Nama Mata Pelajaran</th>
                     <th>Aksi</th>
                 </tr>
             </thead>
             <tbody>
-                @forelse ($kelas as $k)
+                @forelse ($mapel as $m)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $k->nama_kelas }}</td>
-                        <td>{{ $k->waliKelas->nama ?? '-' }}</td>
+                        <td>{{ $m->kode_mapel }}</td>
+                        <td>{{ $m->nama_mapel }}</td>
                         <td class="flex gap-3">
-                            <a href="{{ route('admin.kelas.edit', $k->id_kelas) }}"
+                            <a href="{{ route('admin.mapel.edit', $m->id_mapel) }}"
                                class="text-blue-600 hover:text-blue-800">
                                 <i class="fa fa-edit"></i>
                             </a>
 
                             <form
-                                action="{{ route('admin.kelas.destroy', $k->id_kelas) }}"
+                                action="{{ route('admin.mapel.destroy', $m->id_mapel) }}"
                                 method="POST"
-                                onsubmit="return confirm('Hapus kelas ini?')"
+                                onsubmit="return confirm('Hapus mapel ini?')"
                             >
                                 @csrf
                                 @method('DELETE')
@@ -70,7 +70,7 @@
                 @empty
                     <tr>
                         <td colspan="4" class="text-center py-6 text-gray-400">
-                            Data kelas belum tersedia
+                            Data mata pelajaran belum tersedia
                         </td>
                     </tr>
                 @endforelse

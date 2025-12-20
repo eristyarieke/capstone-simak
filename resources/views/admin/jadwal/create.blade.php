@@ -1,110 +1,110 @@
 @extends('layouts.app')
+
 @section('content')
+<div class="p-6 max-w-4xl mx-auto">
 
-<h2 class="content-header">Tambah Jadwal Pelajaran</h2>
-<p class="form-subtitle">Silakan isi formulir berikut</p>
+    <h2 class="text-xl font-semibold mb-1">Tambah Jadwal Pelajaran</h2>
+    <p class="text-sm text-gray-500 mb-6">Silakan isi formulir berikut</p>
 
-@if ($errors->any())
-<div class="alert alert-danger">
-    <strong>Terjadi kesalahan:</strong>
-    <ul>
-        @foreach ($errors->all() as $err)
-            <li>{{ $err }}</li>
-        @endforeach
-    </ul>
+    @if ($errors->any())
+        <div class="mb-4 rounded bg-red-100 border border-red-300 p-4 text-sm text-red-700">
+            <strong>Terjadi kesalahan:</strong>
+            <ul class="list-disc ml-5 mt-2">
+                @foreach ($errors->all() as $err)
+                    <li>{{ $err }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <div class="bg-white rounded shadow p-6">
+
+        <form action="{{ route('admin.jadwal.store') }}" method="POST">
+            @csrf
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+                {{-- Kelas --}}
+                <div>
+                    <label class="block text-sm font-medium mb-1">Kelas</label>
+                    <select name="id_kelas" class="input w-full">
+                        <option value="">Pilih Kelas</option>
+                        @foreach($kelas as $k)
+                            <option value="{{ $k->id_kelas }}"
+                                {{ old('id_kelas') == $k->id_kelas ? 'selected' : '' }}>
+                                {{ $k->nama_kelas }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Hari --}}
+                <div>
+                    <label class="block text-sm font-medium mb-1">Hari</label>
+                    <select name="hari" class="input w-full">
+                        <option value="">Pilih Hari</option>
+                        @foreach(['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'] as $h)
+                            <option value="{{ $h }}" {{ old('hari') == $h ? 'selected' : '' }}>
+                                {{ $h }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Mapel --}}
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium mb-1">Mata Pelajaran</label>
+                    <select name="id_mapel" class="input w-full">
+                        <option value="">Pilih Mata Pelajaran</option>
+                        @foreach($mapel as $m)
+                            <option value="{{ $m->id_mapel }}"
+                                {{ old('id_mapel') == $m->id_mapel ? 'selected' : '' }}>
+                                {{ $m->nama_mapel }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Guru --}}
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-medium mb-1">Guru Pengampu</label>
+                    <select name="id_guru" class="input w-full">
+                        <option value="">Pilih Guru</option>
+                        @foreach($guru as $g)
+                            <option value="{{ $g->id_guru }}"
+                                {{ old('id_guru') == $g->id_guru ? 'selected' : '' }}>
+                                {{ $g->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                {{-- Jam --}}
+                <div>
+                    <label class="block text-sm font-medium mb-1">Jam Mulai</label>
+                    <input type="time" name="jam_mulai"
+                           value="{{ old('jam_mulai') }}"
+                           class="input w-full">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Jam Selesai</label>
+                    <input type="time" name="jam_selesai"
+                           value="{{ old('jam_selesai') }}"
+                           class="input w-full">
+                </div>
+            </div>
+
+            <div class="mt-6 flex gap-3">
+                <button type="submit" class="btn-primary">
+                    Simpan
+                </button>
+                <a href="{{ route('admin.jadwal') }}" class="btn-light">
+                    Kembali
+                </a>
+            </div>
+
+        </form>
+    </div>
 </div>
-@endif
-
-<div class="form-card">
-
-<form action="{{ route('jadwal.store') }}" method="POST">
-@csrf
-
-<div class="form-grid">
-
-    {{-- Kelas --}}
-    <div class="form-group">
-        <label>Kelas</label>
-        <select name="id_kelas" class="form-control">
-            <option value="">Pilih Kelas</option>
-            @foreach($kelas as $k)
-                <option value="{{ $k->id_kelas }}"
-                    {{ old('id_kelas') == $k->id_kelas ? 'selected' : '' }}>
-                    {{ $k->nama_kelas }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-    {{-- Hari --}}
-    <div class="form-group">
-        <label>Hari</label>
-        <select name="hari" class="form-control">
-            <option value="">Pilih Hari</option>
-            @foreach(['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'] as $h)
-                <option value="{{ $h }}" {{ old('hari') == $h ? 'selected' : '' }}>
-                    {{ $h }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-    {{-- Mapel --}}
-    <div class="form-group full">
-        <label>Mata Pelajaran</label>
-        <select name="id_mapel" class="form-control">
-            <option value="">Pilih Mata Pelajaran</option>
-            @foreach($mapel as $m)
-                <option value="{{ $m->id_mapel }}"
-                    {{ old('id_mapel') == $m->id_mapel ? 'selected' : '' }}>
-                    {{ $m->nama_mapel }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-    {{-- Guru --}}
-    <div class="form-group full">
-        <label>Guru Pengampu</label>
-        <select name="id_guru" class="form-control">
-            <option value="">Pilih Guru</option>
-            @foreach($guru as $g)
-                <option value="{{ $g->id_guru }}"
-                    {{ old('id_guru') == $g->id_guru ? 'selected' : '' }}>
-                    {{ $g->nama }}
-                </option>
-            @endforeach
-        </select>
-    </div>
-
-    {{-- Jam Mulai --}}
-    <div class="form-group">
-        <label>Jam Mulai</label>
-        <input type="time" name="jam_mulai"
-               value="{{ old('jam_mulai') }}"
-               class="form-control">
-    </div>
-
-    {{-- Jam Selesai --}}
-    <div class="form-group">
-        <label>Jam Selesai</label>
-        <input type="time" name="jam_selesai"
-               value="{{ old('jam_selesai') }}"
-               class="form-control">
-    </div>
-
-</div>
-
-<div class="form-buttons">
-    <button type="submit" class="btn-custom btn-blue">
-        Simpan
-    </button>
-    <a href="{{ route('jadwal.admin') }}" class="btn-custom btn-gray">
-        Kembali
-    </a>
-</div>
-
-</form>
-</div>
-
 @endsection

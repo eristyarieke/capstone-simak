@@ -1,68 +1,111 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
 
-    <h3>Data Siswa</h3>
+<h2 class="text-xl font-bold text-gray-800 mb-6">
+  Data Siswa
+</h2>
 
-    @if (session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
+<div class="bg-white rounded-lg shadow p-6">
 
-     <form method="GET"
-      action="{{ route('admin.siswa.index') }}"
-      class="mb-3 d-flex align-items-center gap-2 flex-wrap">
+  {{-- ================= FILTER ================= --}}
+  <form method="GET" class="flex flex-wrap gap-3 items-center mb-6">
 
-    <input type="text"
-           name="q"
-           value="{{ $q ?? '' }}"
-           placeholder="Cari nama / kelas"
-           class="form-control"
-           style="max-width: 300px;">
+    <input
+      type="text"
+      name="search"
+      placeholder="Cari nama siswa atau kelas..."
+      value="{{ request('search') }}"
+      class="input w-64"
+    >
 
-    <button class="btn btn-primary">Cari</button>
+    <select name="id_kelas" class="input">
+      <option value="">Semua Kelas</option>
+      @foreach ($kelas as $k)
+        <option
+          value="{{ $k->id_kelas }}"
+          {{ request('id_kelas') == $k->id_kelas ? 'selected' : '' }}
+        >
+          {{ $k->nama_kelas }}
+        </option>
+      @endforeach
+    </select>
 
-    <a href="{{ route('admin.siswa.index') }}"
-       class="btn btn-secondary">Reset</a>
-</form>
-    <a href="{{ route('admin.siswa.create') }}" class="btn btn-primary mb-3">Tambah Siswa</a>
+    <button type="submit" class="btn-primary">
+      Terapkan
+    </button>
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Nama</th>
-                <th>Jenis Kelamin</th>
-                <th>Kelas</th>
-                <th>Tahun Masuk</th>
-                <th>Agama</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($siswa as $item)
-                <tr>
-                    <td>{{ $item->id_siswa }}</td>
-                    <td>{{ $item->nama }}</td>
-                    <td>{{ $item->jenis_kelamin }}</td>
-                    <td>{{ $item->kelas->nama_kelas ?? '-' }}</td>
-                    <td>{{ $item->tahun_masuk }}</td>
-                    <td>{{ $item->agama }}</td>
-                    <td>
-                        <a href="{{ route('admin.siswa.edit', $item->id_siswa) }}" class="btn btn-warning btn-sm">Edit</a>
+    {{-- RESET --}}
+    <a href="{{ route('admin.siswa') }}" class="btn-light">
+      Reset
+    </a>
 
-                        <form method="POST" action="{{ route('admin.siswa.destroy', $item->id_siswa) }}" style="display:inline-block;">
-                            @csrf
-                            @method('DELETE')
-                            <button onclick="return confirm('Hapus data ini?')" class="btn btn-danger btn-sm">
-                                Hapus
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
+    <div class="ml-auto">
+      <a href="{{ route('admin.siswa.create') }}" class="btn-success">
+        + Tambah Siswa
+      </a>
+    </div>
+
+  </form>
+
+  {{-- ================= TABLE ================= --}}
+  <div class="overflow-x-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama Siswa</th>
+          <th>Jenis Kelamin</th>
+          <th>Agama</th>
+          <th>Kelas</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @forelse ($siswa as $s)
+          <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $s->nama }}</td>
+            <td>{{ $s->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+            <td>{{ $s->agama }}</td>
+            <td>{{ $s->kelas->nama_kelas ?? '-' }}</td>
+
+            <td class="flex gap-3">
+              {{-- EDIT --}}
+              <a
+                href="#"
+                class="text-blue-600 hover:text-blue-800"
+              >
+                <i class="fa fa-edit"></i>
+              </a>
+
+              {{-- DELETE --}}
+              <form
+                action="{{ route('admin.siswa.destroy', $s->id_siswa) }}"
+                method="POST"
+                onsubmit="return confirm('Hapus data siswa ini?')"
+              >
+                @csrf
+                @method('DELETE')
+
+                <button class="text-red-600 hover:text-red-800">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+        @empty
+          <tr>
+            <td colspan="6" class="text-center py-6 text-gray-400">
+              Belum ada data siswa
+            </td>
+          </tr>
+        @endforelse
+      </tbody>
     </table>
+  </div>
 
 </div>
+
 @endsection

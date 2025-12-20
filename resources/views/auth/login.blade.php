@@ -21,8 +21,10 @@
         <h2 class="school-title">SD Negeri Kendangsari III<br>Surabaya</h2>
         <p class="school-subtitle">Sistem Informasi Manajemen Akademik dan Kesiswaan</p>
 
-        @if(session('error'))
-            <div class="alert-error">{{ session('error') }}</div>
+        @if ($errors->any())
+    <div class="alert-error">
+        {{ $errors->first() }}
+    </div>
         @endif
 
         <form method="POST" action="/login">

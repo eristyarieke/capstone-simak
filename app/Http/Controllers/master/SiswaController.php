@@ -5,121 +5,99 @@ namespace App\Http\Controllers\Master;
 use App\Http\Controllers\Controller;
 use App\Models\Siswa;
 use App\Models\Kelas;
+use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class SiswaController extends Controller
 {
-    protected $sidebar;
-
-    public function __construct()
-    {
-        $this->sidebar = 'layouts.sidebar-admin';
-    }
-
-    // List data siswa
+    /* ============================================================
+       =======================  INDEX  ============================
+       ============================================================ */
     public function index(Request $request)
     {
-        $sidebar = 'layouts.sidebar-admin';
-        $q = $request->q;
+        $tahunAktif = TahunAjaran::aktif();
 
-        $siswa = Siswa::query()
-            ->when($q, function ($query) use ($q) {
-                $query->where('nama', 'like', "%$q%")
-                      ->orWhereHas('kelas', function ($k) use ($q) {
-                        $k->where('nama_kelas', 'like', "%$q%");
-                  });
+        $siswa = Siswa::with('kelas')
+            ->where('id_tahun_ajaran', $tahunAktif->id_tahun_ajaran)
+
+            ->when($request->search, function ($q, $search) {
+                $q->where('nama', 'like', "%$search%")
+                  ->orWhereHas('kelas', fn ($k) =>
+                        $k->where('nama_kelas', 'like', "%$search%"));
             })
+
+            ->when($request->id_kelas, fn ($q, $id) =>
+                $q->where('id_kelas', $id))
+
             ->orderBy('nama')
             ->get();
 
-        return view('admin.siswa.index', compact('siswa', 'sidebar', 'q'));
+        return view('admin.siswa.index', [
+            'title' => 'Data Siswa',
+            'siswa' => $siswa,
+            'kelas' => Kelas::where('id_tahun_ajaran', $tahunAktif->id_tahun_ajaran)
+                            ->orderBy('nama_kelas')->get(),
+        ]);
     }
 
-
-    // Form tambah siswa
+    /* =========================
+       ====== CREATE ===========
+       ========================= */
     public function create()
     {
-        $kelas   = Kelas::orderBy('nama_kelas')->get();
-        $agama   = ['Islam','Kristen','Katolik','Buddha','Hindu','Konghucu'];
-        $sidebar = $this->sidebar;
-
-        return view('admin.siswa.create', compact('kelas','agama','sidebar'));
+        $tahunAktif = TahunAjaran::aktif();
+        
+        return view('admin.siswa.create', [
+            'agama' => ['Islam','Kristen','Katolik','Buddha','Hindu','Konghucu'],
+            'kelas' => Kelas::where('id_tahun_ajaran', $tahunAktif->id_tahun_ajaran)->get()
+        ]);
     }
 
-    // Proses tambah siswa
+    /* ============================================================
+       ========================  STORE  ===========================
+       ============================================================ */
     public function store(Request $request)
     {
-        $request->validate([
-            // id_user TIDAK lagi divalidasi dari input
+        $tahunAktif = TahunAjaran::aktif();
+
+        $validated = $request->validate([
             'nama'          => 'required|string|max:100',
             'jenis_kelamin' => 'required|in:L,P',
             'agama'         => 'required|in:Islam,Kristen,Katolik,Buddha,Hindu,Konghucu',
             'id_kelas'      => 'required|exists:kelas,id_kelas',
-            'tahun_masuk'   => 'required|digits:4',
         ]);
 
-        // Ambil id_user dari user login, kalau belum kebaca pakai default 1 (admin)
-        $idUser = Auth::check() ? Auth::user()->id_user : 1;
+        $validated['id_tahun_ajaran'] = $tahunAktif->id_tahun_ajaran;
 
-        Siswa::create([
-            'id_user'       => $idUser,
-            'nama'          => $request->nama,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'agama'         => $request->agama,
-            'id_kelas'      => $request->id_kelas,
-            'tahun_masuk'   => $request->tahun_masuk,
-        ]);
+        Siswa::create($validated);
 
-        return redirect()->route('admin.siswa.index')
-            ->with('success', 'Data siswa berhasil ditambahkan!');
+        return back()->with('success', 'Data siswa berhasil ditambahkan!');
     }
 
-    // Form edit
-    public function edit($id)
-    {
-        $siswa   = Siswa::findOrFail($id);
-        $kelas   = Kelas::orderBy('nama_kelas')->get();
-        $agama   = ['Islam','Kristen','Katolik','Buddha','Hindu','Konghucu'];
-        $sidebar = $this->sidebar;
-
-        return view('admin.siswa.edit', compact('siswa','kelas','agama','sidebar'));
-    }
-
-    // Proses update
+    /* ============================================================
+       ========================  UPDATE  ==========================
+       ============================================================ */
     public function update(Request $request, $id)
     {
-        $siswa = Siswa::findOrFail($id);
-
-        $request->validate([
-            // id_user juga tidak perlu dari form
+        $validated = $request->validate([
             'nama'          => 'required|string|max:100',
             'jenis_kelamin' => 'required|in:L,P',
             'agama'         => 'required|in:Islam,Kristen,Katolik,Buddha,Hindu,Konghucu',
             'id_kelas'      => 'required|exists:kelas,id_kelas',
-            'tahun_masuk'   => 'required|digits:4',
         ]);
 
-        $siswa->update([
-            // kalau mau, id_user bisa dibiarkan seperti sebelumnya:
-            // 'id_user'       => $siswa->id_user,
-            'nama'          => $request->nama,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'agama'         => $request->agama,
-            'id_kelas'      => $request->id_kelas,
-            'tahun_masuk'   => $request->tahun_masuk,
-        ]);
+        Siswa::findOrFail($id)->update($validated);
 
-        return redirect()->route('admin.siswa.index')
-            ->with('success', 'Data siswa berhasil diperbarui!');
+        return back()->with('success', 'Data siswa berhasil diperbarui!');
     }
 
-    // Hapus data
+    /* ============================================================
+       ========================  DELETE  ==========================
+       ============================================================ */
     public function destroy($id)
     {
         Siswa::findOrFail($id)->delete();
 
-        return redirect()->route('admin.siswa.index')
-            ->with('success', 'Data siswa berhasil dihapus!');
+        return back()->with('success', 'Data siswa berhasil dihapus!');
     }
 }

@@ -2,13 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Kegiatan extends Model
 {
-    protected $table = 'kegiatan';
-    protected $primaryKey = 'id_kegiatan';
-    public $timestamps = false;
+    use HasFactory;
 
-    protected $fillable = ['judul','isi','tanggal','foto'];
+    protected $table = 'kegiatan';
+
+    protected $fillable = [
+        'judul',
+        'deskripsi',
+        'foto',
+        'tanggal_kegiatan',
+        'tahun',
+    ];
 }

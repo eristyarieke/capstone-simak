@@ -9,7 +9,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
-    protected $primaryKey = 'id_user';   // 👈 penting, karena PK-mu id_user
+    protected $primaryKey = 'id_user'; 
     public $incrementing = true;
     protected $keyType = 'int';
 

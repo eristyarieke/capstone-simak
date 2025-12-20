@@ -1,127 +1,204 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ===== GLOBAL BASE STYLES ===== */
+@layer base {
+  body {
+    /* HANYA WARNA & BACKGROUND (Font Poppins dipanggil manual di Blade Frontend) */
+    @apply text-gray-800 bg-gray-50;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold text-gray-900;
+  }
+}
+
 @layer components {
+
+  /* =========================================
+     BAGIAN 1: ADMIN PANEL STYLES
+     ========================================= */
+
   /* ===== SIDEBAR ===== */
   .sidebar {
-  @apply fixed top-0 left-0 h-screen w-[245px]
-         bg-sidebar text-white
-         overflow-hidden
-         transition-[width] duration-300 ease-in-out;
-}
+    @apply fixed top-0 left-0 h-screen w-[245px]
+           bg-sidebar text-white
+           overflow-hidden
+           transition-[width] duration-300 ease-in-out z-40;
+  }
 
-
-.sidebar-collapsed {
-  @apply w-[60px];
-}
-
+  .sidebar-collapsed {
+    @apply w-[60px];
+  }
 
   .sidebar-collapsed .sidebar-text {
     @apply hidden;
   }
 
-  .sidebar-collapsed .menu-item {
-  @apply justify-center px-0;
-}
-
-.sidebar-collapsed .menu-item + .menu-item {
-  @apply mt-2;
-}
-
-.sidebar-collapsed .menu-icon {
-  @apply w-10 flex justify-center; 
-  margin-top: 5px;
-}
-
-.sidebar-collapsed .menu-icon i {
-  @apply text-lg;
-}
-
-.sidebar-collapsed .menu-active {
-  @apply bg-primary;
-}
-
-
   /* ===== APP WRAPPER ===== */
   #app-wrapper {
-  padding-left: 245px;
-  transition: padding-left 0.3s ease;
-}
+    padding-left: 245px;
+    transition: padding-left 0.3s ease;
+  }
 
-#app-wrapper.app-collapsed {
-  padding-left: 72px;
-}
+  #app-wrapper.app-collapsed {
+    padding-left: 72px;
+  }
+
+  /* Responsive Mobile */
+  @media (max-width: 768px) {
+    .sidebar { @apply -translate-x-full w-[245px]; }
+    .sidebar.mobile-open { @apply translate-x-0; }
+    #app-wrapper { @apply pl-0; }
+  }
+
+  /* ===== NAV SPACING ===== */
+  .sidebar nav {
+    @apply px-2;
+  }
+
+  .sidebar-collapsed nav {
+    @apply px-0;
+  }
 
   /* ===== MENU ITEM ===== */
-  .menu-item {
-  @apply flex items-center
-         w-full
-         h-11
-         px-4
-         text-sm text-white/80
-         transition-colors
-         hover:bg-sidebarHover hover:text-white;
-}
+  .sidebar .menu-item {
+    @apply flex items-center
+           block w-full
+           h-14
+           px-6
+           gap-3
+           text-sm text-white/80
+           transition-colors;
+  }
 
-  /* ICON COLUMN (FIXED WIDTH) */
-  .menu-icon {
+  .sidebar .menu-item:hover {
+    @apply bg-sidebarHover text-white;
+  }
+
+  /* ===== ICON ===== */
+  .sidebar .menu-icon {
     @apply w-10 flex justify-center shrink-0;
   }
 
-  /* ACTIVE STATE (RESPONSIF) */
-  .menu-active {
-    @apply bg-primary text-white font-semibold;
+  /* ===== ACTIVE ===== */
+  .sidebar .menu-active {
+    @apply bg-primary text-white font-semibold border-l-4 border-secondary;
   }
 
-  .menu-logout {
-  @apply text-white/70;
-}
+  /* ===== COLLAPSED MODE ===== */
+  .sidebar-collapsed .menu-item {
+    @apply justify-center px-0;
+  }
 
-.menu-logout:hover {
-  @apply bg-red-600 text-white;
-}
+  .sidebar-collapsed .menu-icon {
+    @apply w-8 flex justify-center;
+  }
 
-.menu-logout:hover .menu-icon i {
-  @apply text-white;
-}
+  .sidebar-collapsed .menu-icon i {
+    @apply text-lg;
+  }
 
+  /* ===== LOGOUT ===== */
+  .sidebar .menu-logout {
+    @apply text-white/70;
+  }
 
-  /* SECTION TITLE */
-  .menu-section {
-    @apply px-6 mt-6 mb-2
+  .sidebar .menu-logout:hover {
+    @apply bg-red-600 text-white;
+  }
+
+  /* ===== SECTION HEADER ===== */
+  .sidebar .menu-section {
+    @apply px-2 mt-4 mb-2
            text-[11px] uppercase tracking-wider
-           text-white/50;
+           text-white/40 font-bold;
   }
 
-  /* ===== BUTTON ===== */
+  /* =========================================
+     BAGIAN 2: UI COMPONENTS
+     ========================================= */
+
   .btn-primary {
-    @apply bg-primary text-white px-4 py-2 rounded text-sm font-semibold hover:opacity-90;
+    @apply bg-primary text-white px-4 py-2 rounded shadow-sm text-sm font-semibold hover:bg-blue-800 transition duration-200;
   }
 
   .btn-success {
-    @apply bg-success text-white px-4 py-2 rounded text-sm font-semibold hover:opacity-90;
+    @apply bg-success text-white px-4 py-2 rounded shadow-sm text-sm font-semibold hover:bg-green-700 transition duration-200;
   }
 
   .btn-light {
-    @apply bg-gray-100 text-gray-700 px-4 py-2 rounded text-sm hover:bg-gray-200;
+    @apply bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded shadow-sm text-sm hover:bg-gray-50 transition duration-200;
+  }
+  
+  .btn-danger {
+    @apply bg-danger text-white px-4 py-2 rounded shadow-sm text-sm font-semibold hover:bg-red-700 transition duration-200;
   }
 
-  /* ===== FORM ===== */
   .input {
-    @apply border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary;
+    @apply w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 
+           focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200;
+  }
+  
+  .table {
+    @apply w-full text-sm text-left border-collapse;
   }
 
-  /* ===== TABLE ===== */
-  .table {
-    @apply w-full text-sm border border-gray-200;
+  .table thead tr {
+    @apply bg-gray-100 border-b border-gray-200;
   }
 
   .table th {
-    @apply bg-gray-100 text-left px-4 py-3 font-semibold;
+    @apply px-4 py-3 font-semibold text-gray-600 uppercase tracking-wider text-xs;
+  }
+
+  .table tbody tr {
+    @apply border-b border-gray-100 hover:bg-gray-50 transition;
   }
 
   .table td {
-    @apply px-4 py-3 border-t;
+    @apply px-4 py-3 text-gray-700 align-middle;
   }
+
+
+  /* =========================================
+     BAGIAN 3: FRONT-END (LANDING PAGE) STYLES
+     ========================================= */
+
+  /* Navbar Link */
+  .nav-link {
+    @apply text-white hover:text-secondary transition duration-300 relative;
+  }
+  
+  .nav-link.active {
+    @apply text-secondary font-bold;
+  }
+
+  /* Efek Hover Kartu */
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+
+  /* Judul Section */
+  .section-title {
+    /* NOTE: Kita paksa font-poppins di sini juga biar judul section pasti cantik */
+    @apply font-poppins text-2xl md:text-3xl font-bold text-gray-800 text-center mb-2;
+  }
+  
+  .section-divider {
+    @apply h-1 w-20 bg-primary mx-auto rounded mt-2 mb-10;
+  }
+  
+  .pagination-custom span, 
+  .pagination-custom a {
+    @apply px-4 py-2 border rounded mx-1 text-sm bg-white hover:bg-blue-50 text-gray-600;
+  }
+  
+  .pagination-custom .active {
+    @apply bg-primary text-white border-primary;
+  }
+
 }

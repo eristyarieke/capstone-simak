@@ -3,7 +3,7 @@
 @section('content')
 <div class="p-6 max-w-4xl mx-auto">
 
-    <h2 class="text-xl font-semibold mb-1">Tambah Siswa</h2>
+    <h2 class="text-xl font-semibold mb-1">Tambah Guru</h2>
     <p class="text-sm text-gray-500 mb-6">Silakan isi formulir berikut</p>
 
     @if ($errors->any())
@@ -19,22 +19,27 @@
 
     <div class="bg-white rounded shadow p-6">
 
-        <form action="{{ route('admin.siswa.store') }}" method="POST">
+        <form action="{{ route('admin.guru.store') }}" method="POST">
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <div>
-                    <label class="block text-sm font-medium mb-1">Nama Siswa</label>
+                    <label class="block text-sm font-medium mb-1">Nama Guru</label>
                     <input name="nama" value="{{ old('nama') }}" class="input w-full">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium mb-1">Jabatan</label>
+                    <input name="jabatan" value="{{ old('jabatan') }}" class="input w-full">
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Jenis Kelamin</label>
                     <select name="jenis_kelamin" class="input w-full">
                         <option value="">Pilih</option>
-                        <option value="L" {{ old('jenis_kelamin')=='L'?'selected':'' }}>Laki-laki</option>
-                        <option value="P" {{ old('jenis_kelamin')=='P'?'selected':'' }}>Perempuan</option>
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
                     </select>
                 </div>
 
@@ -43,22 +48,7 @@
                     <select name="agama" class="input w-full">
                         <option value="">Pilih</option>
                         @foreach($agama as $a)
-                            <option value="{{ $a }}" {{ old('agama')==$a?'selected':'' }}>
-                                {{ $a }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium mb-1">Kelas</label>
-                    <select name="id_kelas" class="input w-full">
-                        <option value="">Pilih Kelas</option>
-                        @foreach($kelas as $k)
-                            <option value="{{ $k->id_kelas }}"
-                                {{ old('id_kelas')==$k->id_kelas?'selected':'' }}>
-                                {{ $k->nama_kelas }}
-                            </option>
+                            <option value="{{ $a }}">{{ $a }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -67,7 +57,7 @@
 
             <div class="mt-6 flex gap-3">
                 <button class="btn-primary">Simpan</button>
-                <a href="{{ route('admin.siswa') }}" class="btn-light">Kembali</a>
+                <a href="{{ route('admin.guru') }}" class="btn-light">Kembali</a>
             </div>
 
         </form>

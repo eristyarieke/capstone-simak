@@ -1,50 +1,56 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="p-6 max-w-4xl mx-auto">
 
-    <h2 class="mb-1">Manajemen Data Kelas</h2>
-    <h4 class="mb-4">Edit Data Kelas</h4>
+    <h2 class="text-xl font-semibold mb-1">Edit Kelas</h2>
+    <p class="text-sm text-gray-500 mb-6">Perbarui data kelas</p>
 
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $e)
-                    <li>{{ $e }}</li>
+        <div class="mb-4 rounded bg-red-100 border border-red-300 p-4 text-sm text-red-700">
+            <strong>Terjadi kesalahan:</strong>
+            <ul class="list-disc ml-5 mt-2">
+                @foreach ($errors->all() as $err)
+                    <li>{{ $err }}</li>
                 @endforeach
             </ul>
         </div>
     @endif
 
-    <form action="{{ route('admin.kelas.update', $kelas->id_kelas) }}" method="POST">
-        @csrf
-        @method('PUT')
+    <div class="bg-white rounded shadow p-6">
+        <form action="{{ route('admin.kelas.update', $kelas->id_kelas) }}" method="POST">
+            @csrf
+            @method('PUT')
 
-        <div class="mb-3">
-            <label class="form-label">Nama Kelas</label>
-            <input type="text"
-                   name="nama_kelas"
-                   class="form-control"
-                   value="{{ old('nama_kelas', $kelas->nama_kelas) }}"
-                   required>
-        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <div class="mb-3">
-            <label class="form-label">Wali Kelas</label>
-            <select name="wali_kelas" class="form-control">
-                <option value="">- Pilih Wali Kelas -</option>
-                @foreach ($guru as $g)
-                    <option value="{{ $g->id_guru }}"
-                        {{ old('wali_kelas', $kelas->wali_kelas) == $g->id_guru ? 'selected' : '' }}>
-                        {{ $g->nama }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Nama Kelas</label>
+                    <input type="text" name="nama_kelas"
+                           value="{{ old('nama_kelas', $kelas->nama_kelas) }}"
+                           class="input w-full">
+                </div>
 
-        <button type="submit" class="btn btn-primary">Update</button>
-        <a href="{{ route('admin.kelas.index') }}" class="btn btn-secondary">Kembali</a>
-    </form>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Wali Kelas</label>
+                    <select name="wali_kelas" class="input w-full">
+                        <option value="">- Pilih Guru -</option>
+                        @foreach ($guru as $g)
+                            <option value="{{ $g->id_guru }}"
+                                {{ old('wali_kelas', $kelas->wali_kelas) == $g->id_guru ? 'selected' : '' }}>
+                                {{ $g->nama }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
 
+            </div>
+
+            <div class="mt-6 flex gap-3">
+                <button class="btn-primary">Update</button>
+                <a href="{{ route('admin.kelas.index') }}" class="btn-light">Kembali</a>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection
