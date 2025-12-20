@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
-// 1. Import Model CMS (Konten)
+// --- IMPORT SEMUA MODEL ---
 use App\Models\Slider;
 use App\Models\SambutanKepsek;
 use App\Models\Pengumuman;
@@ -19,8 +20,8 @@ use App\Models\Feedback;
 use App\Models\Siswa;
 use App\Models\Guru;
 use App\Models\Kelas;
-use App\Models\TahunAjaran; 
 use App\Models\Mapel;
+use App\Models\TahunAjaran;
 
 class PublicController extends Controller
 {
@@ -29,55 +30,38 @@ class PublicController extends Controller
      */
     public function index()
     {
-        // --- BAGIAN KONTEN ---
+        // 1. KONTEN
         $sliders = Slider::where('status', 'aktif')->get();
-        $sambutan = SambutanKepsek::first(); // Mengambil satu data sambutan
+        $sambutan = SambutanKepsek::first();
         $pengumuman = Pengumuman::latest('tanggal')->take(2)->get();
         $artikelTerbaru = Artikel::where('status', 'publish')
                             ->latest('tanggal_publish')
                             ->take(3)
                             ->get();
 
-        // --- BAGIAN STATISTIK (Count Data Real) ---
-        // Menghitung jumlah baris di database
-        $total_siswa = Siswa::count(); 
+        // 2. STATISTIK
+        $total_siswa = Siswa::count();
         $total_guru  = Guru::count();
-        $total_kelas = Kelas::count(); 
-        $total_mapel = Mapel::count(); 
+        $total_kelas = Kelas::count();
+        $total_mapel = Mapel::count(); // Tambahan untuk statistik mapel
 
-        // --- BAGIAN TAHUN AJARAN ---
-        // Mengambil tahun ajaran yang statusnya aktif (jika ada kolom status)
-        // Atau ambil yang paling baru dibuat
+        // 3. TAHUN AJARAN (Logika Smart Format)
         $ta_aktif = TahunAjaran::where('is_aktif', 1)->first();
-
-        // Logika Format Tahun (Supaya jadi 2024/2025)
+        
         if ($ta_aktif) {
-            // Ambil kolom 'nama_tahun' dari database
-            $rawTahun = $ta_aktif->nama_tahun; 
-
-            // Cek apakah admin nulisnya sudah "2024/2025" atau cuma "2024"
+            $rawTahun = $ta_aktif->nama_tahun;
             if (str_contains($rawTahun, '/')) {
-                // Kalau sudah ada garis miring, pakai langsung
-                $tahun_ajaran = $rawTahun; 
+                $tahun_ajaran = $rawTahun;
             } else {
-                // Kalau cuma angka "2024", kita format manual jadi "2024/2025"
                 $tahun_ajaran = $rawTahun . '/' . ((int)$rawTahun + 1);
             }
         } else {
-            // Fallback jika belum ada tahun ajaran yang diset aktif
             $tahun_ajaran = date('Y') . '/' . (date('Y') + 1);
         }
 
-        // Kirim semua variabel ke View
         return view('frontend.home', compact(
-            'sliders', 
-            'sambutan', 
-            'pengumuman', 
-            'artikelTerbaru',
-            'total_siswa',
-            'total_guru',
-            'total_kelas',
-            'total_mapel',
+            'sliders', 'sambutan', 'pengumuman', 'artikelTerbaru',
+            'total_siswa', 'total_guru', 'total_kelas', 'total_mapel',
             'tahun_ajaran'
         ));
     }
@@ -87,18 +71,26 @@ class PublicController extends Controller
      */
     public function profil()
     {
+        // 1. Ambil data Profil
         $profil = ProfilSekolah::first();
-        $visi   = Visi::all();
-        $misi   = Misi::all();
+
+        // 2. Ambil data Visi & Misi
+        $visi = Visi::all();
+        $misi = Misi::all();
         
-        return view('frontend.profil', compact('profil', 'visi', 'misi'));
+        // 3. Ambil data Galeri (Ambil 4 foto terbaru untuk footer halaman profil)
+        // Jika belum ada data Galeri, kode view tetap aman (tidak error)
+        $galeri = Galeri::latest()->take(4)->get(); 
+        
+        return view('frontend.profil', compact('profil', 'visi', 'misi', 'galeri'));
     }
 
     /**
-     * Halaman Kegiatan (Galeri Kegiatan)
+     * Halaman Galeri Kegiatan
      */
     public function kegiatan()
     {
+        // Tampilkan 9 foto per halaman
         $kegiatan = Kegiatan::latest('tanggal_kegiatan')->paginate(9);
         return view('frontend.kegiatan', compact('kegiatan'));
     }
@@ -108,27 +100,30 @@ class PublicController extends Controller
      */
     public function prestasi()
     {
+        // Tampilkan 9 prestasi per halaman
         $prestasi = Prestasi::latest('tahun')->paginate(9);
         return view('frontend.prestasi', compact('prestasi'));
     }
 
     /**
-     * Halaman Daftar Artikel/Berita
+     * Halaman List Artikel
      */
     public function artikel()
     {
+        // Hanya yang status publish, 6 artikel per halaman
         $artikel = Artikel::where('status', 'publish')
                     ->latest('tanggal_publish')
-                    ->paginate(6); 
+                    ->paginate(6);
+        
         return view('frontend.artikel.index', compact('artikel'));
     }
 
     /**
-     * Halaman Detail Artikel
+     * Halaman Baca Detail Artikel
      */
     public function detailArtikel($slug)
     {
-        // Cek apakah pencarian by Slug atau ID (flexible)
+        // Cari berdasarkan Slug dulu, kalau tidak ketemu coba cari by ID
         $berita = Artikel::where('slug', $slug)
                     ->orWhere('id', $slug)
                     ->firstOrFail();
@@ -146,7 +141,7 @@ class PublicController extends Controller
     }
 
     /**
-     * Proses Kirim Feedback
+     * Proses Simpan Pesan dari Pengunjung (Feedback)
      */
     public function kirimFeedback(Request $request)
     {
@@ -157,9 +152,10 @@ class PublicController extends Controller
         ]);
 
         Feedback::create([
-            'nama'  => $request->nama,
-            'email' => $request->email,
-            'komentar' => $request->pesan, // Sesuaikan dengan nama kolom di DB (komentar)
+            'nama'      => $request->nama,
+            'email'     => $request->email,
+            'komentar'  => $request->pesan, // Pastikan kolom di DB namanya 'komentar'
+            'tanggal'   => now(), // Opsional jika tidak auto-timestamp
         ]);
 
         return back()->with('success', 'Terima kasih! Pesan Anda telah terkirim.');

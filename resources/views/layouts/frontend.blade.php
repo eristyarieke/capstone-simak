@@ -45,6 +45,33 @@
         </div>
     </nav>
 
+    {{-- ================= SLIDER SECTION ================= --}}
+<section class="relative bg-gray-200 h-[500px] flex items-center overflow-hidden">
+    @if(isset($sliders) && $sliders->count() > 0)
+        <div class="absolute inset-0">
+             <img src="{{ asset('storage/' . $sliders->first()->gambar) }}" class="w-full h-full object-cover">
+             <div class="absolute inset-0 bg-black/40"></div>
+        </div>
+        <div class="relative container mx-auto px-4 text-center text-white z-10">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">{{ $sliders->first()->judul }}</h2>
+            <p class="text-lg md:text-xl opacity-90">{{ $sliders->first()->subjudul }}</p>
+        </div>
+    @else
+        {{-- Placeholder Default --}}
+        <div class="absolute inset-0 bg-sidebar"></div>
+        <div class="relative container mx-auto px-4 text-center text-white z-10">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Selamat Datang di SDN Kendangsari III</h2>
+            <p class="text-lg">Mewujudkan Generasi Cerdas, Berkarakter, dan Berprestasi</p>
+        </div>
+    @endif
+    
+    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        <span class="w-3 h-3 bg-white rounded-full"></span>
+        <span class="w-3 h-3 bg-white/50 rounded-full"></span>
+        <span class="w-3 h-3 bg-white/50 rounded-full"></span>
+    </div>
+</section>
+
     <main class="flex-grow">
         @yield('content')
     </main>
