@@ -7,6 +7,7 @@ use App\Models\Guru;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\QueryException;
 
 class GuruController extends Controller
 {
@@ -62,7 +63,7 @@ class GuruController extends Controller
         ]);
 
         return redirect()
-            ->route('admin.guru.index')
+            ->route('admin.guru')
             ->with('success', 'Data guru berhasil ditambahkan.');
     }
 
@@ -97,7 +98,7 @@ class GuruController extends Controller
         ]));
 
         return redirect()
-            ->route('admin.guru.index')
+            ->route('admin.guru')
             ->with('success', 'Data guru berhasil diperbarui.');
     }
 
@@ -106,10 +107,26 @@ class GuruController extends Controller
        ========================= */
     public function destroy($id)
     {
-        Guru::findOrFail($id)->delete();
+        try {
+            $guru = Guru::findOrFail($id);
+            $guru->delete();
 
-        return redirect()
-            ->route('admin.guru.index')
-            ->with('success', 'Data guru berhasil dihapus.');
+            // Kalo BERHASIL, kirim session key 'success'
+            return back()->with('success', 'Data guru berhasil dihapus.');
+
+        } catch (\Illuminate\Database\QueryException $e) {
+            
+            // Kalo GAGAL (karena Foreign Key / Relasi), kirim session key 'error'
+            // Error Code 23000 = Integrity constraint violation
+            if ($e->getCode() == "23000") {
+                return back()->with('error', 'Gagal menghapus! Guru ini masih terdaftar sebagai Wali Kelas atau memiliki Jadwal.');
+            }
+
+            // Error database lainnya
+            return back()->with('error', 'Terjadi kesalahan sistem: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            // Error umum lainnya
+            return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+        }
     }
 }

@@ -9,12 +9,6 @@
     Penempatan awal siswa dan mutasi antar kelas
 </p>
 
-@if (session('success'))
-    <div class="mb-4 bg-green-100 border border-green-300 text-green-700 p-3 rounded">
-        {{ session('success') }}
-    </div>
-@endif
-
 {{-- ================= FILTER ================= --}}
 <form method="GET" class="flex flex-wrap gap-3 mb-6">
     <select name="mode" class="input">

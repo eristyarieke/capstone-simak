@@ -51,7 +51,7 @@ class MapelController extends Controller
         Mapel::create($validated);
 
         return redirect()
-            ->route('admin.mapel.index')
+            ->route('admin.mapel')
             ->with('success', 'Mata pelajaran berhasil ditambahkan.');
     }
 
@@ -78,7 +78,7 @@ class MapelController extends Controller
         Mapel::findOrFail($id)->update($validated);
 
         return redirect()
-            ->route('admin.mapel.index')
+            ->route('admin.mapel')
             ->with('success', 'Mata pelajaran berhasil diperbarui.');
     }
 
@@ -88,7 +88,7 @@ class MapelController extends Controller
         Mapel::findOrFail($id)->delete();
 
         return redirect()
-            ->route('admin.mapel.index')
+            ->route('admin.mapel')
             ->with('success', 'Mata pelajaran berhasil dihapus.');
     }
 }

@@ -54,7 +54,7 @@ class PembagianKelasController extends Controller
             ]);
 
         return redirect()
-            ->route('admin.pembagian-kelas.index')
+            ->route('admin.pembagian-kelas')
             ->with('success', 'Siswa berhasil ditempatkan ke kelas.');
     }
 }

@@ -62,7 +62,7 @@ class SiswaController extends Controller
 
         $validated = $request->validate([
             'nama'          => 'required|string|max:100',
-            'jenis_kelamin' => 'required|in:L,P',
+            'jenis_kelamin' => 'required|string',
             'agama'         => 'required|in:Islam,Kristen,Katolik,Buddha,Hindu,Konghucu',
             'id_kelas'      => 'required|exists:kelas,id_kelas',
         ]);
@@ -71,7 +71,25 @@ class SiswaController extends Controller
 
         Siswa::create($validated);
 
-        return back()->with('success', 'Data siswa berhasil ditambahkan!');
+        return redirect()
+            ->route('admin.siswa')
+            ->with('success', 'Data siswa berhasil ditambahkan.');
+    }
+
+    public function edit($id)
+    {
+        $siswa = Siswa::findOrFail($id);
+
+        $tahunAktif = TahunAjaran::aktif();
+
+        return view('admin.siswa.edit', [
+            'title' => 'Edit Data Siswa',
+            'siswa' => $siswa,
+            'agama' => ['Islam','Kristen','Katolik','Buddha','Hindu','Konghucu'],
+            'kelas' => Kelas::where('id_tahun_ajaran', $tahunAktif->id_tahun_ajaran)
+                            ->orderBy('nama_kelas')
+                            ->get()
+        ]);
     }
 
     /* ============================================================
@@ -81,14 +99,16 @@ class SiswaController extends Controller
     {
         $validated = $request->validate([
             'nama'          => 'required|string|max:100',
-            'jenis_kelamin' => 'required|in:L,P',
+            'jenis_kelamin' => 'required|string',
             'agama'         => 'required|in:Islam,Kristen,Katolik,Buddha,Hindu,Konghucu',
             'id_kelas'      => 'required|exists:kelas,id_kelas',
         ]);
 
         Siswa::findOrFail($id)->update($validated);
 
-        return back()->with('success', 'Data siswa berhasil diperbarui!');
+        return redirect()
+            ->route('admin.siswa')
+            ->with('success', 'Data siswa berhasil diperbarui.');
     }
 
     /* ============================================================

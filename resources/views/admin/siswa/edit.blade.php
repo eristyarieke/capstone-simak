@@ -32,8 +32,8 @@
                 <div>
                     <label class="block text-sm font-medium mb-1">Jenis Kelamin</label>
                     <select name="jenis_kelamin" class="input w-full">
-                        <option value="L" {{ $siswa->jenis_kelamin=='L'?'selected':'' }}>Laki-laki</option>
-                        <option value="P" {{ $siswa->jenis_kelamin=='P'?'selected':'' }}>Perempuan</option>
+                        <option value="Laki-laki" {{ $siswa->jenis_kelamin=='Laki-laki'?'selected':'' }}>Laki-laki</option>
+                        <option value="Perempuan" {{ $siswa->jenis_kelamin=='Perempuan'?'selected':'' }}>Perempuan</option>
                     </select>
                 </div>
 

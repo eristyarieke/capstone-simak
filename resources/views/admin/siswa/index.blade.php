@@ -67,14 +67,14 @@
           <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $s->nama }}</td>
-            <td>{{ $s->jenis_kelamin === 'L' ? 'Laki-laki' : 'Perempuan' }}</td>
+            <td>{{ $s->jenis_kelamin }}</td>
             <td>{{ $s->agama }}</td>
             <td>{{ $s->kelas->nama_kelas ?? '-' }}</td>
 
             <td class="flex gap-3">
               {{-- EDIT --}}
               <a
-                href="#"
+                href="{{ route('admin.siswa.edit', $s->id_siswa) }}"
                 class="text-blue-600 hover:text-blue-800"
               >
                 <i class="fa fa-edit"></i>
@@ -84,12 +84,11 @@
               <form
                 action="{{ route('admin.siswa.destroy', $s->id_siswa) }}"
                 method="POST"
-                onsubmit="return confirm('Hapus data siswa ini?')"
               >
                 @csrf
                 @method('DELETE')
 
-                <button class="text-red-600 hover:text-red-800">
+                <button type="submit" class="btn-delete text-red-600 hover:text-red-800">
                   <i class="fa fa-trash"></i>
                 </button>
               </form>

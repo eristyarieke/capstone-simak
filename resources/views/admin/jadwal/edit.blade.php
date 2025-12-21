@@ -19,7 +19,7 @@
 
     <div class="bg-white rounded shadow p-6">
 
-        <form action="{{ route('admin.jadwal.update', $jadwal->id) }}" method="POST">
+        <form action="{{ route('admin.jadwal.update', $jadwal->id_jadwal) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -104,7 +104,7 @@
                 <button type="submit" class="btn-primary">
                     Update
                 </button>
-                <a href="{{ route('admin.jadwal.index') }}" class="btn-light">
+                <a href="{{ route('admin.jadwal') }}" class="btn-light">
                     Batal
                 </a>
             </div>

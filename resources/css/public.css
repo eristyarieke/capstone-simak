@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================
+   FRONTEND / PUBLIC STYLES ONLY
+   ========================================= */
+
+@layer base {
+  body {
+    font-family: 'Poppins', sans-serif;
+    @apply text-gray-800 bg-gray-50;
+  }
+
+  section {
+    @apply py-20;
+  }
+}
+
+@layer components {
+
+    .page-section {
+    @apply py-20;
+  }
+
+  .section-title {
+    @apply text-2xl md:text-3xl font-bold text-center mb-2;
+  }
+
+  .section-subtitle {
+    @apply text-sm text-gray-500 text-center mb-10;
+  }
+
+  .card-hover {
+    @apply transition duration-300 hover:-translate-y-1 hover:shadow-lg;
+  }
+    .content-section {
+    @apply py-20;
+  }
+
+  /* Navbar */
+  .nav-link {
+    @apply text-white hover:text-secondary transition duration-300;
+  }
+
+  .nav-link.active {
+    @apply text-secondary font-bold;
+  }
+
+  /* Card Hover */
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+
+  /* Section Title */
+  .section-title {
+    @apply text-2xl md:text-3xl font-bold text-gray-800 text-center mb-2;
+  }
+
+  .section-divider {
+    @apply h-1 w-20 bg-primary mx-auto rounded mt-2 mb-10;
+  }
+
+  /* Pagination */
+  .pagination-custom span,
+  .pagination-custom a {
+    @apply px-4 py-2 border rounded mx-1 text-sm bg-white hover:bg-blue-50 text-gray-600;
+  }
+
+  .pagination-custom .active {
+    @apply bg-primary text-white border-primary;
+  }
+
+}

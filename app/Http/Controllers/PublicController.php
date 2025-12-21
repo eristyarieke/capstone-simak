@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-// --- IMPORT SEMUA MODEL ---
+// Model
 use App\Models\Slider;
 use App\Models\SambutanKepsek;
 use App\Models\Pengumuman;
@@ -21,143 +21,122 @@ use App\Models\Siswa;
 use App\Models\Guru;
 use App\Models\Kelas;
 use App\Models\Mapel;
+use App\Models\Galeri;
 use App\Models\TahunAjaran;
 
 class PublicController extends Controller
 {
-    /**
-     * Halaman Utama (Beranda)
-     */
     public function index()
     {
-        // 1. KONTEN
+        // Banner aktif saja
         $sliders = Slider::where('status', 'aktif')->get();
-        $sambutan = SambutanKepsek::first();
-        $pengumuman = Pengumuman::latest('tanggal')->take(2)->get();
-        $artikelTerbaru = Artikel::where('status', 'publish')
-                            ->latest('tanggal_publish')
-                            ->take(3)
-                            ->get();
 
-        // 2. STATISTIK
+        // Sambutan (single record)
+        $sambutan = SambutanKepsek::first();
+
+        // Pengumuman yang tampil
+        $pengumuman = Pengumuman::where('status', 'tampil')
+            ->orderBy('tanggal', 'desc')
+            ->limit(3)
+            ->get();
+
+        // Artikel publish
+        $artikelTerbaru = Artikel::where('status', 'publish')
+            ->orderBy('tanggal_publish', 'desc')
+            ->limit(3)
+            ->get();
+
+        // Statistik
         $total_siswa = Siswa::count();
         $total_guru  = Guru::count();
         $total_kelas = Kelas::count();
-        $total_mapel = Mapel::count(); // Tambahan untuk statistik mapel
+        $total_mapel = Mapel::count();
 
-        // 3. TAHUN AJARAN (Logika Smart Format)
+        // Tahun ajaran aktif
         $ta_aktif = TahunAjaran::where('is_aktif', 1)->first();
-        
-        if ($ta_aktif) {
-            $rawTahun = $ta_aktif->nama_tahun;
-            if (str_contains($rawTahun, '/')) {
-                $tahun_ajaran = $rawTahun;
-            } else {
-                $tahun_ajaran = $rawTahun . '/' . ((int)$rawTahun + 1);
-            }
-        } else {
-            $tahun_ajaran = date('Y') . '/' . (date('Y') + 1);
-        }
+        $tahun_ajaran = $ta_aktif
+            ? (str_contains($ta_aktif->nama_tahun, '/')
+                ? $ta_aktif->nama_tahun
+                : $ta_aktif->nama_tahun . '/' . ((int)$ta_aktif->nama_tahun + 1))
+            : date('Y') . '/' . (date('Y') + 1);
 
         return view('frontend.home', compact(
-            'sliders', 'sambutan', 'pengumuman', 'artikelTerbaru',
-            'total_siswa', 'total_guru', 'total_kelas', 'total_mapel',
+            'sliders',
+            'sambutan',
+            'pengumuman',
+            'artikelTerbaru',
+            'total_siswa',
+            'total_guru',
+            'total_kelas',
+            'total_mapel',
             'tahun_ajaran'
         ));
     }
 
-    /**
-     * Halaman Profil Sekolah
-     */
     public function profil()
     {
-        // 1. Ambil data Profil
-        $profil = ProfilSekolah::first();
-
-        // 2. Ambil data Visi & Misi
-        $visi = Visi::all();
-        $misi = Misi::all();
-        
-        // 3. Ambil data Galeri (Ambil 4 foto terbaru untuk footer halaman profil)
-        // Jika belum ada data Galeri, kode view tetap aman (tidak error)
-        $galeri = Galeri::latest()->take(4)->get(); 
-        
-        return view('frontend.profil', compact('profil', 'visi', 'misi', 'galeri'));
+        return view('frontend.profil', [
+            'profil' => ProfilSekolah::first(),
+            'visi'   => Visi::all(),
+            'misi'   => Misi::all(),
+            'galeri' => Galeri::latest()->limit(6)->get(),
+        ]);
     }
 
-    /**
-     * Halaman Galeri Kegiatan
-     */
     public function kegiatan()
     {
-        // Tampilkan 9 foto per halaman
-        $kegiatan = Kegiatan::latest('tanggal_kegiatan')->paginate(9);
-        return view('frontend.kegiatan', compact('kegiatan'));
+        return view('frontend.kegiatan', [
+            'kegiatan' => Kegiatan::orderBy('tanggal_kegiatan', 'desc')->paginate(9)
+        ]);
     }
 
-    /**
-     * Halaman Prestasi
-     */
     public function prestasi()
     {
-        // Tampilkan 9 prestasi per halaman
-        $prestasi = Prestasi::latest('tahun')->paginate(9);
-        return view('frontend.prestasi', compact('prestasi'));
+        return view('frontend.prestasi', [
+            'prestasi' => Prestasi::orderBy('tahun', 'desc')
+                ->orderBy('created_at', 'desc')
+                ->paginate(9)
+        ]);
     }
 
-    /**
-     * Halaman List Artikel
-     */
     public function artikel()
     {
-        // Hanya yang status publish, 6 artikel per halaman
-        $artikel = Artikel::where('status', 'publish')
-                    ->latest('tanggal_publish')
-                    ->paginate(6);
-        
-        return view('frontend.artikel.index', compact('artikel'));
+        return view('frontend.artikel.index', [
+            'artikel' => Artikel::where('status', 'publish')
+                ->orderBy('tanggal_publish', 'desc')
+                ->paginate(6)
+        ]);
     }
 
-    /**
-     * Halaman Baca Detail Artikel
-     */
-    public function detailArtikel($slug)
-    {
-        // Cari berdasarkan Slug dulu, kalau tidak ketemu coba cari by ID
-        $berita = Artikel::where('slug', $slug)
-                    ->orWhere('id', $slug)
-                    ->firstOrFail();
+    public function detailArtikel($id)
+{
+    $berita = Artikel::where('status', 'publish')
+        ->where('id', $id)
+        ->firstOrFail();
 
-        return view('frontend.artikel.detail', compact('berita'));
-    }
+    return view('frontend.artikel.detail', compact('berita'));
+}
 
-    /**
-     * Halaman Kontak
-     */
+
     public function kontak()
     {
-        $kontak = Kontak::first();
-        return view('frontend.kontak', compact('kontak'));
+        return view('frontend.kontak', [
+            'kontak' => Kontak::first()
+        ]);
     }
 
-    /**
-     * Proses Simpan Pesan dari Pengunjung (Feedback)
-     */
     public function kirimFeedback(Request $request)
-    {
-        $request->validate([
-            'nama'  => 'required|string|max:100',
-            'email' => 'required|email',
-            'pesan' => 'required|string',
-        ]);
+{
+    $request->validate([
+        'nama'  => 'required|string|max:100',
+        'pesan' => 'required|string',
+    ]);
 
-        Feedback::create([
-            'nama'      => $request->nama,
-            'email'     => $request->email,
-            'komentar'  => $request->pesan, // Pastikan kolom di DB namanya 'komentar'
-            'tanggal'   => now(), // Opsional jika tidak auto-timestamp
-        ]);
+    Feedback::create([
+        'nama'     => $request->nama,
+        'komentar' => $request->pesan,
+    ]);
 
-        return back()->with('success', 'Terima kasih! Pesan Anda telah terkirim.');
-    }
+    return back()->with('success', 'Pesan berhasil dikirim.');
+}
 }

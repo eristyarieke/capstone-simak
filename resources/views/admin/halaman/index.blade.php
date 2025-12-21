@@ -19,9 +19,10 @@
                 ['url'=>'kontak',   'icon'=>'address-card',  'label'=>'Kontak'],
                 ['url'=>'banner',   'icon'=>'window-maximize','label'=>'Banner Utama'],
                 ['url'=>'sambutan', 'icon'=>'comment-dots',  'label'=>'Sambutan'],
+                ['url'=>'pengumuman',  'icon'=>'bullhorn',         'label'=>'Pengumuman'],
                 ['url'=>'profil',   'icon'=>'building',      'label'=>'Profil Sekolah'],
-                ['url'=>'visi',     'icon'=>'bookmark',      'label'=>'Visi'],
-                ['url'=>'misi',     'icon'=>'check-square',  'label'=>'Misi'],
+                ['url'=>'visi-misi',     'icon'=>'bookmark',      'label'=>'Visi Misi'],
+                ['url'=>'feedback',    'icon'=>'clipboard-check',  'label'=>'Feedback'],
             ];
         @endphp
 

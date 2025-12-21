@@ -108,12 +108,11 @@
               <form
                 action="{{ route('admin.jadwal.destroy', $j->id_jadwal) }}"
                 method="POST"
-                onsubmit="return confirm('Hapus jadwal ini?')"
               >
                 @csrf
                 @method('DELETE')
 
-                <button class="text-red-600 hover:text-red-800">
+                <button type="submit" class="btn-delete text-red-600 hover:text-red-800">
                   <i class="fa fa-trash"></i>
                 </button>
               </form>

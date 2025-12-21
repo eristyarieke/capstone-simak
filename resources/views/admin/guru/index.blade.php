@@ -65,14 +65,13 @@
               <form
                 method="POST"
                 action="{{ route('admin.guru.destroy', $g->id_guru) }}"
-                onsubmit="return confirm('Hapus guru ini?')"
               >
                 @csrf
                 @method('DELETE')
 
-                <button class="text-red-600 hover:text-red-800">
-                  <i class="fa fa-trash"></i>
-                </button>
+                <button type="submit" class="btn-delete text-red-600 hover:text-red-800" >
+        <i class="fa fa-trash"></i>
+    </button>
               </form>
             </td>
           </tr>

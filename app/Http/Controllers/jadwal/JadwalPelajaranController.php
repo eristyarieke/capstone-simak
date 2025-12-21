@@ -91,7 +91,7 @@ class JadwalPelajaranController extends Controller
         JadwalPelajaran::create($validated);
 
         return redirect()
-            ->route('admin.jadwal.index')
+            ->route('admin.jadwal')
             ->with('success', 'Jadwal berhasil ditambahkan.');
     }
 
@@ -129,7 +129,7 @@ class JadwalPelajaranController extends Controller
         JadwalPelajaran::findOrFail($id)->update($validated);
 
         return redirect()
-            ->route('admin.jadwal.index')
+            ->route('admin.jadwal')
             ->with('success', 'Jadwal berhasil diperbarui.');
     }
 
@@ -141,7 +141,7 @@ class JadwalPelajaranController extends Controller
         JadwalPelajaran::findOrFail($id)->delete();
 
         return redirect()
-            ->route('admin.jadwal.index')
+            ->route('admin.jadwal')
             ->with('success', 'Jadwal berhasil dihapus.');
     }
 

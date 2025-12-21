@@ -48,7 +48,7 @@
 
             <div class="mt-6 flex gap-3">
                 <button class="btn-primary">Update</button>
-                <a href="{{ route('admin.kelas.index') }}" class="btn-light">Kembali</a>
+                <a href="{{ route('admin.kelas') }}" class="btn-light">Kembali</a>
             </div>
         </form>
     </div>

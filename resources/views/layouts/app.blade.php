@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ $title ?? 'SIMAK' }}</title>
-  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
@@ -45,6 +46,14 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+
+    window.flashSuccess = "{{ session('success') }}";
+    window.flashError   = "{{ session('error') }}";
+</script>
+
+<script src="{{ asset('js/notif.js') }}"></script>
+
 </body>
 
 </html>

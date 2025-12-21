@@ -27,8 +27,9 @@ Route::controller(PublicController::class)->group(function () {
     Route::get('/kegiatan', 'kegiatan')->name('kegiatan');
     Route::get('/prestasi', 'prestasi')->name('prestasi');
     Route::get('/artikel', 'artikel')->name('artikel');
-    Route::get('/artikel/{slug}', 'detailArtikel')->name('artikel.detail'); // Detail berita
+    Route::get('/artikel/{id}', 'detailArtikel')->name('artikel.detail'); // Detail berita
     Route::get('/kontak', 'kontak')->name('kontak');
+    Route::post('/kontak', 'kirimFeedback')->name('feedback.kirim');
     Route::post('/feedback', 'kirimFeedback')->name('feedback.store'); // Form kirim pesan
 });
 /*
@@ -116,30 +117,84 @@ Route::middleware(['auth','role:admin'])
 
     Route::get('/kelola-halaman', [KelolaHalamanController::class, 'index'])
     ->name('kelola-halaman');
+
     Route::get('/kelola-halaman/galeri', [KelolaHalamanController::class, 'galeri'])
     ->name('kelola-halaman.galeri');
+    Route::get('/kelola-halaman/galeri/create', [KelolaHalamanController::class, 'galeriCreate'])->name('kelola-halaman.galeri.create');
+    Route::post('/kelola-halaman/galeri', [KelolaHalamanController::class, 'galeriStore'])->name('kelola-halaman.galeri.store');
+    Route::delete('/kelola-halaman/galeri/{id}', [KelolaHalamanController::class, 'galeriDestroy'])->name('kelola-halaman.galeri.destroy');
+
     Route::get('/kelola-halaman/kegiatan', [KelolaHalamanController::class, 'kegiatan'])
     ->name('kelola-halaman.kegiatan');
+    Route::get('/kelola-halaman/kegiatan/create', [KelolaHalamanController::class, 'kegiatanCreate'])->name('kelola-halaman.kegiatan.create');
+    Route::post('/kelola-halaman/kegiatan', [KelolaHalamanController::class, 'kegiatanStore'])->name('kelola-halaman.kegiatan.store');
+    Route::get('/kelola-halaman/kegiatan/{id}/edit', [KelolaHalamanController::class, 'kegiatanEdit'])->name('kelola-halaman.kegiatan.edit');
+    Route::put('/kelola-halaman/kegiatan/{id}', [KelolaHalamanController::class, 'kegiatanUpdate'])->name('kelola-halaman.kegiatan.update');
+    Route::delete('/kelola-halaman/kegiatan/{id}', [KelolaHalamanController::class, 'kegiatanDestroy'])->name('kelola-halaman.kegiatan.destroy');
+
     Route::get('/kelola-halaman/prestasi', [KelolaHalamanController::class, 'prestasi'])
     ->name('kelola-halaman.prestasi');
+    Route::get('/kelola-halaman/prestasi/create', [KelolaHalamanController::class, 'prestasiCreate'])->name('kelola-halaman.prestasi.create');
+    Route::post('/kelola-halaman/prestasi', [KelolaHalamanController::class, 'prestasiStore'])->name('kelola-halaman.prestasi.store');
+    Route::get('/kelola-halaman/prestasi/{id}/edit', [KelolaHalamanController::class, 'prestasiEdit'])->name('kelola-halaman.prestasi.edit');
+    Route::put('/kelola-halaman/prestasi/{id}', [KelolaHalamanController::class, 'prestasiUpdate'])->name('kelola-halaman.prestasi.update');
+    Route::delete('/kelola-halaman/prestasi/{id}', [KelolaHalamanController::class, 'prestasiDestroy'])->name('kelola-halaman.prestasi.destroy');
+
     Route::get('/kelola-halaman/artikel', [KelolaHalamanController::class, 'artikel'])
     ->name('kelola-halaman.artikel');
+    Route::get('/kelola-halaman/artikel/create', [KelolaHalamanController::class, 'artikelCreate'])->name('kelola-halaman.artikel.create');
+    Route::post('/kelola-halaman/artikel', [KelolaHalamanController::class, 'artikelStore'])->name('kelola-halaman.artikel.store');
+    Route::get('/kelola-halaman/artikel/{id}/edit', [KelolaHalamanController::class, 'artikelEdit'])->name('kelola-halaman.artikel.edit');
+    Route::put('/kelola-halaman/artikel/{id}', [KelolaHalamanController::class, 'artikelUpdate'])->name('kelola-halaman.artikel.update');
+    Route::delete('/kelola-halaman/artikel/{id}', [KelolaHalamanController::class, 'artikelDestroy'])->name('kelola-halaman.artikel.destroy');
+
+    Route::get('/kelola-halaman/pengumuman', [KelolaHalamanController::class, 'pengumuman'])->name('kelola-halaman.pengumuman');
+    Route::get('/kelola-halaman/pengumuman/create', [KelolaHalamanController::class, 'pengumumanCreate'])->name('kelola-halaman.pengumuman.create');
+    Route::post('/kelola-halaman/pengumuman', [KelolaHalamanController::class, 'pengumumanStore'])->name('kelola-halaman.pengumuman.store');
+    Route::get('/kelola-halaman/pengumuman/{id}/edit', [KelolaHalamanController::class, 'pengumumanEdit'])->name('kelola-halaman.pengumuman.edit');
+    Route::put('/kelola-halaman/pengumuman/{id}', [KelolaHalamanController::class, 'pengumumanUpdate'])->name('kelola-halaman.pengumuman.update');
+    Route::delete('/kelola-halaman/pengumuman/{id}', [KelolaHalamanController::class, 'pengumumanDestroy'])->name('kelola-halaman.pengumuman.destroy');
+
     Route::get('/kelola-halaman/kontak', [KelolaHalamanController::class, 'kontak'])
     ->name('kelola-halaman.kontak');
+    Route::put('/kelola-halaman/kontak', [KelolaHalamanController::class, 'kontakUpdate'])->name('kelola-halaman.kontak.update');
+
     Route::get('/kelola-halaman/banner', [KelolaHalamanController::class, 'banner'])
     ->name('kelola-halaman.banner');
+    Route::post('/kelola-halaman/banner', [KelolaHalamanController::class, 'bannerStore'])
+    ->name('kelola-halaman.banner.store');
+    Route::get('/kelola-halaman/banner/create', [KelolaHalamanController::class, 'bannerCreate'])
+    ->name('kelola-halaman.banner.create');
+    Route::get('/kelola-halaman/banner/{id}/edit', [KelolaHalamanController::class, 'bannerEdit'])
+    ->name('kelola-halaman.banner.edit');
+    Route::put('/kelola-halaman/banner/{id}', [KelolaHalamanController::class, 'bannerUpdate'])
+    ->name('kelola-halaman.banner.update');
+    Route::delete('/kelola-halaman/banner/{id}', [KelolaHalamanController::class, 'bannerDestroy'])
+    ->name('kelola-halaman.banner.destroy');
+
     Route::get('/kelola-halaman/sambutan', [KelolaHalamanController::class, 'sambutan'])
     ->name('kelola-halaman.sambutan');
+    Route::put('/kelola-halaman/sambutan', [KelolaHalamanController::class, 'sambutanUpdate'])
+    ->name('kelola-halaman.sambutan.update');
+
     Route::get('/kelola-halaman/profil', [KelolaHalamanController::class, 'profil'])
     ->name('kelola-halaman.profil');
-    Route::get('/kelola-halaman/visi', [KelolaHalamanController::class, 'visi'])
-    ->name('kelola-halaman.visi');
-    Route::get('/kelola-halaman/misi', [KelolaHalamanController::class, 'misi'])
-    ->name('kelola-halaman.kegiatan.misi');
+    Route::put('/kelola-halaman/profil-sekolah', [KelolaHalamanController::class, 'profilUpdate'])
+    ->name('kelola-halaman.profil.update');
+
+    Route::get('/kelola-halaman/visi-misi', [KelolaHalamanController::class, 'visiMisi'])->name('kelola-halaman.visimisi');
+
+    Route::post('/kelola-halaman/visi', [KelolaHalamanController::class, 'visiStore'])->name('kelola-halaman.visi.store');
+    Route::delete('/kelola-halaman/visi/{id}', [KelolaHalamanController::class, 'visiDestroy'])->name('kelola-halaman.visi.destroy');
+
+    // CRUD MISI
+    Route::post('/kelola-halaman/misi', [KelolaHalamanController::class, 'misiStore'])->name('kelola-halaman.misi.store');
+    Route::delete('/kelola-halaman/misi/{id}', [KelolaHalamanController::class, 'misiDestroy'])->name('kelola-halaman.misi.destroy');
+
+    Route::get('/kelola-halaman/feedback', [KelolaHalamanController::class, 'feedback'])->name('kelola-halaman.feedback');
+    Route::delete('/kelola-halaman/feedback/{id}', [KelolaHalamanController::class, 'feedbackDestroy'])->name('kelola-halaman.feedback.destroy');
 
     });
-
-
 
 /*
 |--------------------------------------------------------------------------

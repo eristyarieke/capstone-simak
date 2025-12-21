@@ -58,7 +58,7 @@ class KelasController extends Controller
         Kelas::create($validated);
 
         return redirect()
-            ->route('admin.kelas.index')
+            ->route('admin.kelas')
             ->with('success', 'Kelas berhasil ditambahkan.');
     }
 
@@ -87,7 +87,7 @@ class KelasController extends Controller
         Kelas::findOrFail($id)->update($validated);
 
         return redirect()
-            ->route('admin.kelas.index')
+            ->route('admin.kelas')
             ->with('success', 'Kelas berhasil diperbarui.');
     }
 
@@ -97,7 +97,7 @@ class KelasController extends Controller
         Kelas::findOrFail($id)->delete();
 
         return redirect()
-            ->route('admin.kelas.index')
+            ->route('admin.kelas')
             ->with('success', 'Kelas berhasil dihapus.');
     }
 }
