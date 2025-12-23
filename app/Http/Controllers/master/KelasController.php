@@ -100,4 +100,9 @@ class KelasController extends Controller
             ->route('admin.kelas')
             ->with('success', 'Kelas berhasil dihapus.');
     }
+
+    public function laporan() {
+    // Logika ambil data untuk laporan
+    return view('kepsek.laporan.siswa'); 
+}
 }

@@ -4,115 +4,132 @@
 
 @section('content')
 
-{{-- ================= HEADER ================= --}}
-<section class="py-24 bg-blue-800 text-white">
+{{-- ================= PAGE HEADER ================= --}}
+<section class="bg-slate-50 py-20 border-b border-slate-200">
     <div class="container mx-auto px-4 text-center">
-        <h1 class="text-3xl md:text-4xl font-bold">Hubungi Kami</h1>
-        <p class="text-blue-200 mt-3">
-            Kami siap melayani informasi yang Anda butuhkan
+        <span class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block animate-fade-in-up">Layanan Informasi</span>
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 animate-fade-in-up delay-100">
+            Hubungi Kami
+        </h1>
+        <p class="text-slate-500 text-lg max-w-2xl mx-auto animate-fade-in-up delay-200">
+            Punya pertanyaan seputar pendaftaran atau kegiatan sekolah? Kami siap membantu Anda.
         </p>
     </div>
 </section>
 
-{{-- ================= KONTEN ================= --}}
-<section class="py-24 bg-white">
-    <div class="container mx-auto px-4">
+{{-- ================= KONTEN UTAMA ================= --}}
+<section class="py-20 bg-white relative overflow-hidden">
+    
+    {{-- Decorative Background --}}
+    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-96 h-96 bg-yellow-50 rounded-full blur-3xl opacity-50 pointer-events-none"></div>
 
-        {{-- FLASH MESSAGE --}}
-        @if(session('success'))
-            <div class="mb-12 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg shadow-sm">
-                <p class="font-bold">Berhasil</p>
-                <p>{{ session('success') }}</p>
-            </div>
-        @endif
+    <div class="container mx-auto px-4 relative z-10">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
 
-            {{-- INFO KONTAK --}}
-            <div>
-                <h2 class="text-2xl font-bold text-blue-900 mb-8">
-                    Informasi Sekolah
-                </h2>
-
+            {{-- KOLOM KIRI: INFO & MAPS --}}
+            <div class="space-y-8">
+                
                 <div class="space-y-6">
+                    <h2 class="text-2xl font-bold text-slate-800 flex items-center gap-3">
+                        <span class="w-2 h-8 bg-blue-600 rounded-full"></span>
+                        Kantor Sekolah
+                    </h2>
 
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xl">
-                            <i class="fas fa-map-marker-alt"></i>
+                    {{-- Card: Alamat --}}
+                    <div class="flex items-start gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 flex-shrink-0 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-location-dot"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-800">Alamat</h4>
-                            <p class="text-gray-600">
+                            <h4 class="font-bold text-slate-800 text-lg mb-1">Alamat</h4>
+                            <p class="text-slate-500 leading-relaxed">
                                 {{ $kontak->alamat ?? 'Alamat sekolah belum diisi.' }}
                             </p>
                         </div>
                     </div>
 
-                    <div class="flex items-start gap-4">
-                        <div class="w-12 h-12 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center text-xl">
-                            <i class="fas fa-phone-alt"></i>
+                    {{-- Card: Telepon --}}
+                    <div class="flex items-start gap-4 p-6 rounded-2xl bg-white border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                        <div class="w-12 h-12 flex-shrink-0 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-phone"></i>
                         </div>
                         <div>
-                            <h4 class="font-semibold text-gray-800">Telepon / WhatsApp</h4>
-                            <p class="text-gray-600">
-                                {{ $kontak->telepon ?? '-' }}
+                            <h4 class="font-bold text-slate-800 text-lg mb-1">Telepon / WhatsApp</h4>
+                            <p class="text-slate-500">
+                                {{ $kontak->telepon ?? 'Nomor belum tersedia' }}
                             </p>
                         </div>
                     </div>
-
                 </div>
 
-                {{-- MAP --}}
-                <div class="mt-10 h-64 rounded-2xl overflow-hidden border border-gray-200">
+                {{-- MAPS --}}
+                <div class="rounded-3xl overflow-hidden shadow-lg border-4 border-white h-80 relative bg-slate-200 group">
                     <iframe
-                        src="{{ $kontak->maps_embed ?? 'https://www.google.com/maps?q=Surabaya&output=embed' }}"
-                        class="w-full h-full border-0"
+                        src="{{ $kontak->maps_embed ?? 'https://maps.google.com/maps?q=-6.200000,106.816666&z=15&output=embed' }}"
+                        class="w-full h-full border-0 filter grayscale group-hover:grayscale-0 transition duration-700"
+                        allowfullscreen=""
                         loading="lazy">
                     </iframe>
+                    {{-- Overlay Label --}}
+                    <div class="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg text-xs font-bold shadow-sm pointer-events-none text-slate-700">
+                        <i class="fa-solid fa-map-pin text-red-500 mr-1"></i> Lokasi Kami
+                    </div>
                 </div>
+
             </div>
 
-            {{-- FORM PESAN --}}
-            <div class="bg-gray-50 p-8 md:p-10 rounded-2xl border border-gray-200 shadow-sm">
-                <h2 class="text-2xl font-bold text-blue-900 mb-2">
-                    Kirim Pesan
-                </h2>
-                <p class="text-gray-500 mb-8">
-                    Silakan tinggalkan pesan Anda.
-                </p>
+            {{-- KOLOM KANAN: FORMULIR --}}
+            <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 p-8 md:p-10 relative">
+                
+                {{-- Form Header --}}
+                <div class="mb-8">
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2">Kirim Pesan</h2>
+                    <p class="text-slate-500 text-sm">Masukan, saran, atau pertanyaan dapat dikirimkan melalui formulir di bawah ini.</p>
+                </div>
 
-                <form action="{{ route('feedback.kirim') }}" method="POST" class="space-y-5">
+                {{-- FLASH MESSAGE --}}
+                @if(session('success'))
+                    <div class="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl flex items-center gap-3 animate-pulse">
+                        <i class="fa-regular fa-circle-check text-xl"></i>
+                        <div>
+                            <p class="font-bold text-sm">Pesan Terkirim!</p>
+                            <p class="text-xs">{{ session('success') }}</p>
+                        </div>
+                    </div>
+                @endif
+
+                <form action="{{ route('feedback.kirim') }}" method="POST" class="space-y-6">
                     @csrf
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Nama Lengkap
-                        </label>
-                        <input
-                            type="text"
-                            name="nama"
-                            required
-                            class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 p-3">
+                        <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Nama Lengkap</label>
+                        <div class="relative">
+                            <span class="absolute left-4 top-3.5 text-slate-400">
+                                <i class="fa-regular fa-user"></i>
+                            </span>
+                            <input type="text" name="nama" required
+                                placeholder="Masukkan nama Anda"
+                                class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-slate-700 placeholder:text-slate-400">
+                        </div>
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Pesan
-                        </label>
-                        <textarea
-                            name="pesan"
-                            rows="4"
-                            required
-                            class="w-full rounded-lg border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 p-3"></textarea>
+                        <label class="block text-sm font-bold text-slate-700 mb-2 ml-1">Pesan Anda</label>
+                        <div class="relative">
+                            <textarea name="pesan" rows="5" required
+                                placeholder="Tuliskan pesan atau pertanyaan Anda di sini..."
+                                class="w-full p-4 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 transition-all outline-none text-slate-700 placeholder:text-slate-400 resize-none"></textarea>
+                        </div>
                     </div>
 
-                    <button
-                        type="submit"
-                        class="w-full bg-blue-800 hover:bg-blue-900 text-white font-bold py-3 rounded-lg transition shadow-md hover:-translate-y-1">
-                        Kirim Pesan
-                        <i class="fas fa-paper-plane ml-2"></i>
+                    <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2 group">
+                        <span>Kirim Sekarang</span>
+                        <i class="fa-solid fa-paper-plane text-sm group-hover:translate-x-1 transition-transform"></i>
                     </button>
                 </form>
+
             </div>
 
         </div>

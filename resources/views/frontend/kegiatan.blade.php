@@ -4,60 +4,78 @@
 
 @section('content')
 
-{{-- PAGE HEADER --}}
-<section class="bg-blue-800 text-white py-12">
+{{-- ================= PAGE HEADER ================= --}}
+<section class="bg-slate-50 py-20 border-b border-slate-200">
     <div class="container mx-auto px-4 text-center">
-        <h1 class="text-3xl font-bold">Galeri Kegiatan</h1>
-        <p class="text-blue-200 mt-2">Dokumentasi aktivitas siswa dan guru</p>
+        <span class="text-blue-600 font-bold tracking-wider uppercase text-sm mb-2 block animate-fade-in-up">Dokumentasi</span>
+        <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4 animate-fade-in-up delay-100">
+            Galeri Kegiatan
+        </h1>
+        <p class="text-slate-500 text-lg max-w-2xl mx-auto animate-fade-in-up delay-200">
+            Rekaman jejak aktivitas pembelajaran, kreativitas, dan kebersamaan di lingkungan sekolah.
+        </p>
     </div>
 </section>
 
-{{-- LIST KEGIATAN --}}
-<section class="py-16 bg-gray-50">
+{{-- ================= LIST KEGIATAN ================= --}}
+<section class="py-20 bg-white">
     <div class="container mx-auto px-4">
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @forelse($kegiatan as $item)
-                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 group">
+                <article class="bg-white rounded-2xl overflow-hidden shadow-sm border border-slate-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col h-full">
                     
                     {{-- FOTO KEGIATAN --}}
-                    <div class="h-56 overflow-hidden relative">
+                    <div class="relative h-64 overflow-hidden">
                         <img src="{{ asset('storage/' . $item->foto) }}"
                              alt="{{ $item->judul }}"
-                             class="w-full h-full object-cover group-hover:scale-110 transition duration-500">
+                             class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
 
-                        <div class="absolute bottom-0 left-0 bg-gradient-to-t from-black/70 to-transparent w-full p-4">
-                            <span class="text-white text-xs font-bold bg-yellow-500 px-2 py-1 rounded">
+                        {{-- Overlay Gradient (Subtle) --}}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-60"></div>
+
+                        {{-- Date Badge (Floating Glassmorphism) --}}
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md px-3 py-1.5 rounded-lg shadow-sm border border-white/50">
+                            <div class="flex items-center gap-2 text-xs font-bold text-slate-700">
+                                <i class="fa-regular fa-calendar text-blue-600"></i>
                                 {{ \Carbon\Carbon::parse($item->tanggal_kegiatan)->format('d M Y') }}
-                            </span>
+                            </div>
                         </div>
                     </div>
 
                     {{-- DESKRIPSI --}}
-                    <div class="p-6">
-                        <h3 class="text-lg font-bold text-gray-800 mb-2 leading-tight group-hover:text-blue-600 transition">
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3 leading-snug group-hover:text-blue-600 transition-colors">
                             {{ $item->judul }}
                         </h3>
 
-                        <p class="text-gray-600 text-sm line-clamp-3">
+                        <p class="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-4 flex-grow">
                             {{ Str::limit($item->deskripsi, 120) }}
                         </p>
                     </div>
-                </div>
+                </article>
             @empty
-                <div class="col-span-3 text-center py-12">
-                    <div class="text-gray-400 text-6xl mb-4">
-                        <i class="far fa-images"></i>
+                {{-- EMPTY STATE --}}
+                <div class="col-span-full py-20 text-center bg-slate-50 rounded-3xl border-2 border-dashed border-slate-300">
+                    <div class="inline-flex items-center justify-center w-20 h-20 bg-white rounded-full shadow-sm mb-6">
+                        <i class="fa-regular fa-images text-3xl text-slate-300"></i>
                     </div>
-                    <p class="text-gray-500">Belum ada dokumentasi kegiatan.</p>
+                    <h3 class="text-lg font-bold text-slate-700">Belum ada dokumentasi</h3>
+                    <p class="text-slate-500 mt-1">Kegiatan sekolah belum diunggah.</p>
                 </div>
             @endforelse
         </div>
 
         {{-- PAGINATION --}}
-        <div class="mt-12 flex justify-center">
-            {{ $kegiatan->links('pagination::tailwind') }}
-        </div>
+        @if($kegiatan->hasPages())
+            <div class="mt-16 flex justify-center">
+                {{-- Styling pagination default Laravel biasanya sudah cukup, 
+                     tapi dibungkus div agar centered --}}
+                <div class="bg-white p-2 rounded-xl shadow-sm border border-slate-100">
+                    {{ $kegiatan->links('pagination::tailwind') }}
+                </div>
+            </div>
+        @endif
 
     </div>
 </section>

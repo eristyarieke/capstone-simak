@@ -75,11 +75,16 @@ class PublicController extends Controller
 
     public function profil()
     {
+        // 1. Ambil data SambutanKepsek lagi
+        $sambutan = SambutanKepsek::first();
+
         return view('frontend.profil', [
-            'profil' => ProfilSekolah::first(),
-            'visi'   => Visi::all(),
-            'misi'   => Misi::all(),
-            'galeri' => Galeri::latest()->limit(6)->get(),
+            'profil'   => ProfilSekolah::first(),
+            'visi'     => Visi::all(),
+            'misi'     => Misi::all(),
+            'galeri'   => Galeri::latest()->limit(6)->get(),
+            // 2. Kirim ke view
+            'sambutan' => $sambutan, 
         ]);
     }
 

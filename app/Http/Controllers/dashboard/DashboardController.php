@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Carbon;
 
 use App\Models\Siswa;
 use App\Models\Guru;
@@ -27,11 +28,25 @@ class DashboardController extends Controller
         $this->middleware('auth');
     }
 
-    private function ensureRole(string $role)
+    private function ensureRole($roles)
     {
-        if (Auth::user()->role !== $role) {
+        if (is_string($roles)) {
+            $roles = [$roles];
+        }
+
+        if (!in_array(Auth::user()->role, $roles)) {
             abort(403, 'Akses ditolak');
         }
+    }
+
+    private function getStatistikUmum()
+    {
+        return [
+            'totalSiswa' => Siswa::count(),
+            'totalGuru'  => Guru::count(),
+            'totalKelas' => Kelas::count(),
+            'totalMapel' => Mapel::count(),
+        ];
     }
 
     /**
@@ -60,11 +75,7 @@ class DashboardController extends Controller
     {
         $this->ensureRole('admin');
 
-        // ====== CARD COUNTS ======
-        $totalSiswa = Siswa::count();
-        $totalGuru  = Guru::count();
-        $totalKelas = Kelas::count();
-        $totalMapel = Mapel::count();
+       $stats = $this->getStatistikUmum();
 
         // ====== DISTRIBUSI SISWA PER KELAS ======
         $kelasDistribusi = Kelas::query()
@@ -215,32 +226,51 @@ class DashboardController extends Controller
             ->values()
             ->take(5);
 
-        return view('admin.dashboard', [
+        return view('admin.dashboard', array_merge($stats, [
             'title'           => 'Dashboard Admin',
-            'totalSiswa'      => $totalSiswa,
-            'totalGuru'       => $totalGuru,
-            'totalKelas'      => $totalKelas,
-            'totalMapel'      => $totalMapel,
             'kelasDistribusi' => $kelasDistribusi,
             'aktivitas'       => $aktivitas,
-        ]);
+        ]));
     }
 
-    public function guru()
+   public function guru()
     {
         $this->ensureRole('guru');
 
-        return view('guru.dashboard', [
-            'title' => 'Dashboard Guru',
-        ]);
+        $stats = $this->getStatistikUmum();
+
+        $hariIni = Carbon::now()->locale('id')->isoFormat('dddd');
+        $jadwalHariIni = JadwalPelajaran::with(['mapel', 'kelas'])
+                            ->where('hari', $hariIni)
+                            ->orderBy('jam_mulai')
+                            ->get();
+
+        $pengumuman = Pengumuman::latest()->take(3)->get();
+
+        return view('guru.dashboard', array_merge($stats, [
+            'title'         => 'Dashboard Guru',
+            'jadwalHariIni' => $jadwalHariIni,
+            'pengumuman'    => $pengumuman,
+            'hariIni'       => $hariIni
+        ]));
     }
 
     public function kepsek()
     {
-        $this->ensureRole('kepala_sekolah');
+        // Support dua kemungkinan nama role
+        $this->ensureRole(['kepsek', 'kepala_sekolah']);
 
-        return view('kepsek.dashboard', [
-            'title' => 'Dashboard Kepala Sekolah',
-        ]);
+        $stats = $this->getStatistikUmum();
+
+        $totalPrestasi   = Prestasi::count();
+        $prestasiTerbaru = Prestasi::latest()->take(5)->get();
+        $kelasDistribusi = Kelas::withCount('siswa')->orderBy('nama_kelas')->get();
+
+        return view('kepsek.dashboard', array_merge($stats, [
+            'title'           => 'Dashboard Kepala Sekolah',
+            'totalPrestasi'   => $totalPrestasi,
+            'prestasiTerbaru' => $prestasiTerbaru,
+            'kelasDistribusi' => $kelasDistribusi
+        ]));
     }
 }

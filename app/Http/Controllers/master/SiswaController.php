@@ -120,4 +120,9 @@ class SiswaController extends Controller
 
         return back()->with('success', 'Data siswa berhasil dihapus!');
     }
+
+    public function laporan() {
+    // Logika ambil data untuk laporan
+    return view('kepsek.laporan.siswa'); 
+}
 }

@@ -1,76 +1,120 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /* =========================================
-   FRONTEND / PUBLIC STYLES ONLY
+   BASE STYLES
    ========================================= */
-
 @layer base {
-  body {
-    font-family: 'Poppins', sans-serif;
-    @apply text-gray-800 bg-gray-50;
+  html {
+    scroll-behavior: smooth;
   }
 
-  section {
-    @apply py-20;
+  body {
+    font-family: 'Poppins', sans-serif;
+    /* Menggunakan Slate agar lebih lembut & modern dibanding Gray murni */
+    @apply text-slate-600 bg-slate-50 antialiased leading-relaxed;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply text-slate-800 font-bold;
+  }
+  
+  /* Styling default untuk link dalam paragraf (artikel) */
+  p a {
+    @apply text-blue-600 hover:text-blue-800 underline decoration-blue-300 hover:decoration-blue-800 transition-all;
   }
 }
 
+/* =========================================
+   UTILITIES (Custom Animations & Helpers)
+   ========================================= */
+@layer utilities {
+  
+  /* Animasi Header (Fade In Up) */
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .delay-100 { animation-delay: 0.1s; }
+  .delay-200 { animation-delay: 0.2s; }
+  .delay-300 { animation-delay: 0.3s; }
+  
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Glassmorphism Utilities */
+  .glass {
+    @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-lg;
+  }
+}
+
+/* =========================================
+   COMPONENTS
+   ========================================= */
 @layer components {
 
-    .page-section {
-    @apply py-20;
-  }
-
-  .section-title {
-    @apply text-2xl md:text-3xl font-bold text-center mb-2;
-  }
-
-  .section-subtitle {
-    @apply text-sm text-gray-500 text-center mb-10;
-  }
-
-  .card-hover {
-    @apply transition duration-300 hover:-translate-y-1 hover:shadow-lg;
-  }
-    .content-section {
-    @apply py-20;
-  }
-
-  /* Navbar */
+  /* --- NAVBAR LINKS --- */
   .nav-link {
-    @apply text-white hover:text-secondary transition duration-300;
+    @apply relative text-slate-700 hover:text-blue-600 transition-colors duration-300 font-medium text-[15px] tracking-wide px-1 py-2 block md:inline-block;
+  }
+
+  /* Efek Garis Bawah Animasi pada Navbar */
+  .nav-link::after {
+    content: '';
+    @apply absolute left-0 bottom-1 w-0 h-[2px] bg-blue-600 transition-all duration-300 ease-out;
+  }
+
+  .nav-link:hover::after,
+  .nav-link.active::after {
+    @apply w-full;
   }
 
   .nav-link.active {
-    @apply text-secondary font-bold;
+    @apply text-blue-600 font-semibold;
+  }
+  
+  /* Mobile Menu Link (jika ada dropdown mobile) */
+  .mobile-nav-link {
+    @apply block px-4 py-3 text-slate-600 hover:bg-blue-50 hover:text-blue-700 transition font-medium border-l-4 border-transparent hover:border-blue-600;
   }
 
-  /* Card Hover */
-  .card-hover {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  /* --- BUTTONS --- */
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-semibold transition-all duration-300 shadow-lg shadow-blue-700/20 hover:shadow-blue-700/40 hover:-translate-y-0.5;
   }
 
-  /* Section Title */
-  .section-title {
-    @apply text-2xl md:text-3xl font-bold text-gray-800 text-center mb-2;
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 rounded-xl font-semibold transition-all duration-300 shadow-sm hover:shadow-md hover:-translate-y-0.5;
   }
 
-  .section-divider {
-    @apply h-1 w-20 bg-primary mx-auto rounded mt-2 mb-10;
+  /* --- PAGINATION --- */
+  /* Menyesuaikan output default Laravel Tailwind Pagination */
+  nav[role="navigation"] {
+    @apply flex justify-center items-center gap-2;
+  }
+  
+  /* Style angka pagination */
+  nav[role="navigation"] a,
+  nav[role="navigation"] span {
+    @apply px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200;
   }
 
-  /* Pagination */
-  .pagination-custom span,
-  .pagination-custom a {
-    @apply px-4 py-2 border rounded mx-1 text-sm bg-white hover:bg-blue-50 text-gray-600;
+  /* Halaman Aktif */
+  span[aria-current="page"] > span {
+    @apply bg-blue-600 text-white shadow-md shadow-blue-600/30 border-blue-600 !important;
   }
-
-  .pagination-custom .active {
-    @apply bg-primary text-white border-primary;
+  
+  /* Halaman Tidak Aktif / Link */
+  nav[role="navigation"] a {
+    @apply bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 hover:text-blue-600 hover:border-blue-200;
   }
-
 }

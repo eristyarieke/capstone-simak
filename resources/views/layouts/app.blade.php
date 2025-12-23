@@ -19,7 +19,7 @@
             @include('layouts.sidebar-admin')
         @elseif ($role === 'guru')
             @include('layouts.sidebar-guru')
-        @elseif ($role === 'kepala_sekolah')
+        @elseif ($role === 'kepsek')
             @include('layouts.sidebar-kepsek')
         @endif
     @endauth

@@ -3,7 +3,7 @@
   <div class="flex flex-col items-center py-6 border-b border-white/10 shrink-0">
     <div class="sidebar-text text-sm font-semibold mb-3">SDN Kendangsari III</div>
     
-    <img src="/img/profile.png" class="w-12 h-12 rounded-full mb-3">
+    <img src="{{ asset('images/logosekolah.png') }}" class="w-16 h-16 mb-3">
     
     <div class="sidebar-text text-sm font-semibold">
       {{ auth()->user()->name ?? 'kepsek' }}
@@ -21,8 +21,8 @@
 
     <div class="menu-section sidebar-text">Manajemen Pengguna</div>
 
-    <button type="button" onclick="window.location.href='{{ route('kepsek.pengguna') }}'"
-            class="menu-item text-left {{ request()->routeIs('kepsek.pengguna*') ? 'menu-active' : '' }}">
+    <button type="button" onclick="window.location.href='{{ route('kepsek.users') }}'" 
+            class="menu-item text-left {{ request()->routeIs('kepsek.users*') ? 'menu-active' : '' }}">
       <span class="menu-icon"><i class="fa-solid fa-user"></i></span>
       <span class="sidebar-text">Data Pengguna</span>
     </button>
@@ -41,22 +41,10 @@
       <span class="sidebar-text">Data Guru</span>
     </button>
 
-    <button type="button" onclick="window.location.href='{{ route('kepsek.laporan.absensi') }}'"
-            class="menu-item text-left {{ request()->routeIs('kepsek.laporan.absensi*') ? 'menu-active' : '' }}">
-      <span class="menu-icon"><i class="fa-solid fa-users"></i></span>
-      <span class="sidebar-text">Absensi Siswa</span>
-    </button>
-
     <button type="button" onclick="window.location.href='{{ route('kepsek.laporan.jadwal') }}'"
             class="menu-item text-left {{ request()->routeIs('kepsek.laporan.jadwal*') ? 'menu-active' : '' }}">
       <span class="menu-icon"><i class="fa-solid fa-calendar-days"></i></span>
       <span class="sidebar-text">Jadwal Pelajaran</span>
-    </button>
-
-    <button type="button" onclick="window.location.href='{{ route('kepsek.laporan.nilai') }}'"
-            class="menu-item text-left {{ request()->routeIs('kepsek.laporan.nilai*') ? 'menu-active' : '' }}">
-      <span class="menu-icon"><i class="fa-solid fa-file-contract"></i></span>
-      <span class="sidebar-text">Data Nilai</span>
     </button>
 
     <div class="menu-section sidebar-text">Website</div>

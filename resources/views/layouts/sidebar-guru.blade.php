@@ -3,7 +3,7 @@
   <div class="flex flex-col items-center py-6 border-b border-white/10 shrink-0">
     <div class="sidebar-text text-sm font-semibold mb-3">SDN Kendangsari III</div>
     
-    <img src="{{ auth()->user()->profile_photo_url ?? '/img/profile.png' }}" class="w-12 h-12 rounded-full mb-3 object-cover">
+    <img src="{{ asset('images/logosekolah.png') }}" class="w-12 h-12 rounded-full mb-3 object-cover">
     
     <div class="sidebar-text text-sm font-semibold">
       {{ auth()->user()->name ?? 'guru' }}

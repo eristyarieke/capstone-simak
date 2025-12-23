@@ -9,8 +9,13 @@ use App\Http\Controllers\Master\GuruController;
 use App\Http\Controllers\Master\KelasController;
 use App\Http\Controllers\Master\MapelController;
 use App\Http\Controllers\Master\PembagianKelasController;
+use App\Http\Controllers\kepsek\UserController;
+use App\Http\Controllers\guru\JadwalGuruController;
 use App\Http\Controllers\landingpage\KelolaHalamanController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\laporan\LaporanSiswaController;
+use App\Http\Controllers\laporan\LaporanGuruController;
+use App\Http\Controllers\laporan\LaporanJadwalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -201,34 +206,45 @@ Route::middleware(['auth','role:admin'])
 | GURU
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth','role:guru'])
-    ->prefix('guru')
-    ->name('guru.')
-    ->group(function () {
+Route::middleware(['auth', 'role:guru'])->prefix('guru')->name('guru.')->group(function () {
+    
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'guru'])->name('dashboard');
 
-        Route::get('/dashboard', [DashboardController::class, 'guru'])
-            ->name('dashboard');
+    // Jadwal (Menggunakan JadwalController yang sudah ada)
+    // Tips: Di controller, pastikan function 'index' bisa filter jadwal berdasarkan ID Guru yang login
+    Route::get('/jadwal', [JadwalGuruController::class, 'index'])->name('jadwal');
 
-        Route::get('/jadwal', [JadwalPelajaranController::class, 'guru'])
-            ->name('jadwal');
-    });
+});
 
 /*
 |--------------------------------------------------------------------------
-| KEPALA SEKOLAH
+| ROUTES KEPALA SEKOLAH (KEPSEK)
 |--------------------------------------------------------------------------
+| Kepsek: Dashboard, Manage User, dan Laporan (Cetak).
 */
-Route::middleware(['auth','role:kepsek'])
-    ->prefix('kepsek')
-    ->name('kepsek.')
-    ->group(function () {
+Route::middleware(['auth', 'role:kepsek'])->prefix('kepsek')->name('kepsek.')->group(function () {
 
-        Route::get('/dashboard', [DashboardController::class, 'kepsek'])
-            ->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'kepsek'])->name('dashboard');
+    Route::get('/users', [UserController::class, 'index'])->name('users');
+    Route::get('/users/create', [UserController::class, 'create'])
+    ->name('users.create');
+    Route::post('/users/store', [UserController::class, 'store'])
+    ->name('users.store');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])
+    ->name('users.edit');
+    Route::put('/users/{id}/update', [UserController::class, 'update'])
+    ->name('users.update');
+    Route::delete('/users/{id}/destroy', [UserController::class, 'destroy'])
+    ->name('users.destroy');
 
-        Route::get('/jadwal', [JadwalPelajaranController::class, 'kepsek'])
-            ->name('jadwal');
+    Route::get('/laporan/siswa', [LaporanSiswaController::class, 'index'])->name('laporan.siswa');
+    Route::get('/laporan/siswa/cetak', [LaporanSiswaController::class, 'cetakPdf'])->name('laporan.siswa.pdf');
 
-        Route::get('/jadwal/export/pdf', [JadwalPelajaranController::class, 'exportPdf'])
-            ->name('jadwal.export.pdf');
+    Route::get('/laporan/guru', [LaporanGuruController::class, 'index'])->name('laporan.guru');
+    Route::get('/laporan/guru/cetak', [LaporanGuruController::class, 'cetakPdf'])->name('laporan.guru.pdf');
+
+    Route::get('/laporan/jadwal', [LaporanJadwalController::class, 'index'])->name('laporan.jadwal');
+    Route::get('/laporan/jadwal/cetak', [LaporanJadwalController::class, 'cetakPdf'])->name('laporan.jadwal.pdf');
+
     });

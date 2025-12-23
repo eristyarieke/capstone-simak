@@ -129,4 +129,9 @@ class GuruController extends Controller
             return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
+
+    public function laporan() {
+    // Logika ambil data untuk laporan
+    return view('kepsek.laporan.siswa'); 
+}
 }

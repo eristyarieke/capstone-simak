@@ -9,17 +9,35 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    // Tambahkan Request $request di parameter
+    public function index(Request $request)
     {
+        // Mulai query builder
+        $query = User::query();
+
+        // Cek apakah ada input pencarian 'search'
+        if ($request->has('search') && $request->search != '') {
+            $search = $request->search;
+            
+            // Filter berdasarkan username ATAU role
+            $query->where(function($q) use ($search) {
+                $q->where('username', 'LIKE', '%' . $search . '%')
+                  ->orWhere('role', 'LIKE', '%' . $search . '%');
+            });
+        }
+
         $data = [
             'title' => 'Mengelola Pengguna',
             'sidebar' => 'layouts.sidebar-kepsek',
-            'users' => User::all()
+            // Ambil data (gunakan paginate jika data banyak, atau get jika sedikit)
+            'users' => $query->latest()->get() 
         ];
 
         return view('kepsek.users.index', $data);
     }
 
+    // ... method create, store, edit, update, destroy tetap sama ...
+    
     public function create()
     {
         return view('kepsek.users.create', [
@@ -30,12 +48,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        // $request->validate([
-           // 'username' => 'required|unique:users',
-           // 'password' => 'required|min:6',
-           // 'role' => 'required',
-           // 'status' => 'required'
-        //])
+        // ... validasi sebaiknya di-uncomment ...
 
         User::create([
             'username' => $request->username,
@@ -44,7 +57,7 @@ class UserController extends Controller
             'status' => $request->status
         ]);
 
-        return redirect()->route('kepsek.users.index')
+        return redirect()->route('kepsek.users')
             ->with('success', 'User berhasil ditambahkan!');
     }
 
@@ -73,14 +86,13 @@ class UserController extends Controller
             'status' => $request->status
         ];
 
-        // Jika password diisi, update password
         if ($request->password) {
             $data['password'] = Hash::make($request->password);
         }
 
         $user->update($data);
 
-        return redirect()->route('kepsek.users.index')
+        return redirect()->route('kepsek.users')
             ->with('success', 'User berhasil diperbarui!');
     }
 
@@ -88,7 +100,7 @@ class UserController extends Controller
     {
         User::findOrFail($id)->delete();
 
-        return redirect()->route('kepsek.users.index')
+        return redirect()->route('kepsek.users')
             ->with('success', 'User berhasil dihapus!');
     }
 }

@@ -260,4 +260,9 @@ class JadwalPelajaranController extends Controller
 
         return $pdf->download('jadwal-pelajaran.pdf');
     }
+
+    public function laporan() {
+    // Logika ambil data untuk laporan
+    return view('kepsek.laporan.siswa'); 
+}
 }
