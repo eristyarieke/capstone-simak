@@ -39,10 +39,6 @@
                 <span class="toggle-password" onclick="togglePassword()">👁</span>
             </div>
 
-            <div class="forgot">
-                <a href="#">Lupa Password?</a>
-            </div>
-
             <button class="btn-login" type="submit">
                 LOGIN
             </button>

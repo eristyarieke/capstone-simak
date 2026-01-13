@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Mapel;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class MapelController extends Controller
 {

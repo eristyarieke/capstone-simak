@@ -39,10 +39,12 @@ class AuthController extends Controller
 
         $role = Auth::user()->role;
 
+        // PERUBAHAN ADA DI SINI:
+        // Menambahkan ->with('success', '...') untuk memicu SweetAlert di dashboard
         return match ($role) {
-            'admin'  => redirect()->route('admin.dashboard'),
-            'guru'   => redirect()->route('guru.dashboard'),
-            'kepsek' => redirect()->route('kepsek.dashboard'),
+            'admin'  => redirect()->route('admin.dashboard')->with('success', 'Selamat Datang, Admin!'),
+            'guru'   => redirect()->route('guru.dashboard')->with('success', 'Selamat Datang, Guru!'),
+            'kepsek' => redirect()->route('kepsek.dashboard')->with('success', 'Selamat Datang, Kepala Sekolah!'),
             default  => $this->logoutAndFail($request),
         };
     }

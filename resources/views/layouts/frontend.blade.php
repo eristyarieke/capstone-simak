@@ -138,38 +138,65 @@
         </div>
 
         {{-- KONTAK --}}
-        <div>
-            <h3 class="font-bold text-lg text-white mb-6 relative inline-block">
-                Hubungi Kami
-                <span class="absolute -bottom-2 left-0 w-1/2 h-1 bg-blue-500 rounded-full"></span>
-            </h3>
-            <ul class="space-y-4 text-sm text-slate-400">
-                <li class="flex gap-4 items-center group">
-                    <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
-                        <i class="fa-brands fa-instagram"></i>
-                    </div>
-                    <span class="group-hover:text-white transition-colors">@Kendangsari_SDN</span>
-                </li>
-                <li class="flex gap-4 items-center group">
-                    <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-red-600 group-hover:text-white transition-colors duration-300">
-                        <i class="fa-brands fa-youtube"></i>
-                    </div>
-                    <span class="group-hover:text-white transition-colors">@Kendangsari_SDN</span>
-                </li>
-                <li class="flex gap-4 items-center group">
-                    <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-green-600 group-hover:text-white transition-colors duration-300">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </div>
-                    <span class="group-hover:text-white transition-colors">+62 8xx xxxx xxxx</span>
-                </li>
-                <li class="flex gap-4 items-center group">
-                    <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
-                        <i class="fa-solid fa-globe"></i>
-                    </div>
-                    <span class="group-hover:text-white transition-colors">www.sdnkendangsari.sch.id</span>
-                </li>
-            </ul>
-        </div>
+<div>
+    <h3 class="font-bold text-lg text-white mb-6 relative inline-block">
+        Hubungi Kami
+        <span class="absolute -bottom-2 left-0 w-1/2 h-1 bg-blue-500 rounded-full"></span>
+    </h3>
+    <ul class="space-y-4 text-sm text-slate-400">
+        
+        {{-- INSTAGRAM --}}
+        <li>
+            <a href="https://www.instagram.com/sdn_kendangsari3_official/" target="_blank" rel="noopener noreferrer" class="flex gap-4 items-center group">
+                <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                    <i class="fa-brands fa-instagram"></i>
+                </div>
+                <span class="group-hover:text-white transition-colors">@sdn_kendangsari3_official</span>
+            </a>
+        </li>
+
+        {{-- YOUTUBE --}}
+        <li>
+            <a href="https://www.youtube.com/@sdnkendangsariiii2787" target="_blank" rel="noopener noreferrer" class="flex gap-4 items-center group">
+                <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-red-600 group-hover:text-white transition-colors duration-300">
+                    <i class="fa-brands fa-youtube"></i>
+                </div>
+                <span class="group-hover:text-white transition-colors">@sdnkendangsariiii2787</span>
+            </a>
+        </li>
+
+        {{-- WEBSITE --}}
+        <li>
+            <a href="{{ url('/') }}" class="flex gap-4 items-center group">
+                <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                    <i class="fa-solid fa-globe"></i>
+                </div>
+                <span class="group-hover:text-white transition-colors">www.sdnkendangsari.sch.id</span>
+            </a>
+        </li>
+
+        {{-- Telepon --}}
+        <li>
+            <a href="{{ url('/') }}" class="flex gap-4 items-center group">
+                <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                    <i class="fa-solid fa-phone"></i>
+                </div>
+                <span class="group-hover:text-white transition-colors">(031) 8411915</span>
+            </a>
+        </li>
+
+        {{-- Email --}}
+        <li>
+            <a href="{{ url('/') }}" class="flex gap-4 items-center group">
+                <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300">
+                    <i class="fa-solid fa-envelope"></i>
+                </div>
+                <span class="group-hover:text-white transition-colors">sdnkensaga@gmail.com</span>
+            </a>
+        </li>
+
+    </ul>
+</div>
 
     </div>
 

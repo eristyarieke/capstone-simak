@@ -12,7 +12,7 @@
             Profil Sekolah
         </h1>
         <p class="text-slate-500 max-w-2xl mx-auto text-lg animate-fade-in-up delay-200">
-            Mengenal lebih dekat sejarah, visi, misi, dan lingkungan belajar di sekolah kami.
+            Mengenal lebih dekat sekolah, visi, misi, dan lingkungan belajar di sekolah kami.
         </p>
     </div>
 </section>

@@ -193,4 +193,16 @@
 
     </div>
 </div>
+<script>
+
+    @if(session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil Login!',
+            text: '{{ session('success') }}',
+            showConfirmButton: false,
+            timer: 2000 
+        });
+    @endif
+</script>
 @endsection

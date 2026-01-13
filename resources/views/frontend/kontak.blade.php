@@ -67,7 +67,7 @@
                 {{-- MAPS --}}
                 <div class="rounded-3xl overflow-hidden shadow-lg border-4 border-white h-80 relative bg-slate-200 group">
                     <iframe
-                        src="{{ $kontak->maps_embed ?? 'https://maps.google.com/maps?q=-6.200000,106.816666&z=15&output=embed' }}"
+                        src="{{ $kontak->maps_embed ?? 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2265.017434645732!2d112.7637264905573!3d-7.318417376743778!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fae262887a61%3A0x1ba22f023d4d8ac3!2sSDN%20Kendangsari%20III!5e0!3m2!1sid!2sid!4v1767531830984!5m2!1sid!2sid' }}"
                         class="w-full h-full border-0 filter grayscale group-hover:grayscale-0 transition duration-700"
                         allowfullscreen=""
                         loading="lazy">

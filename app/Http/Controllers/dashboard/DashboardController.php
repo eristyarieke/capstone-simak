@@ -201,16 +201,6 @@ class DashboardController extends Controller
             ]);
         }
 
-        // KONTAK
-        foreach ($this->ambilTerbaru(Kontak::class, 'created_at', 2) as $k) {
-            $aktivitas->push([
-                'icon'  => 'mail',
-                'judul' => 'Pesan kontak',
-                'desc'  => 'Pesan baru diterima',
-                'time'  => $k->created_at ?? now(),
-            ]);
-        }
-
         // SLIDER
         foreach ($this->ambilTerbaru(Slider::class, 'created_at', 1) as $s) {
             $aktivitas->push([

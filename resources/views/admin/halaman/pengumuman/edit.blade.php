@@ -8,6 +8,16 @@
 
 <div class="bg-white rounded-lg shadow p-6 max-w-3xl">
 
+@if ($errors->any())
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>• {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
     <form action="{{ route('admin.kelola-halaman.pengumuman.update', $pengumuman->id) }}" method="POST">
         @csrf
         @method('PUT')
@@ -30,8 +40,12 @@
             <div>
                 <label class="block text-gray-700 font-bold mb-2">Status</label>
                 <select name="status" class="input w-full p-2 border rounded" required>
-                    <option value="Aktif" {{ $pengumuman->status == 'tampil' ? 'selected' : '' }}>Tampil (Tampilkan)</option>
-                    <option value="Nonaktif" {{ $pengumuman->status == 'arsip' ? 'selected' : '' }}>Arsip (Sembunyikan)</option>
+                    <option value="tampil" {{ old('status', $pengumuman->status) == 'tampil' ? 'selected' : '' }}>
+            Tampil (Tampilkan)
+        </option>
+        <option value="arsip" {{ old('status', $pengumuman->status) == 'arsip' ? 'selected' : '' }}>
+            Arsip (Sembunyikan)
+        </option>
                 </select>
             </div>
 

@@ -56,7 +56,7 @@
 
         <div class="flex gap-3 mt-6">
             <button type="submit" class="btn-primary">Update</button>
-            <a href="{{ route('admin.kegiatan') }}" class="btn-light">Batal</a>
+            <a href="{{ route('admin.kelola-halaman.kegiatan') }}" class="btn-light">Batal</a>
         </div>
     </form>
 

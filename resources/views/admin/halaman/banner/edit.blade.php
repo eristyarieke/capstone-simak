@@ -8,7 +8,7 @@
 
 <div class="bg-white rounded-lg shadow p-6 max-w-2xl">
 
-    <form action="{{ route('admin.banner.update', $banner->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.kelola-halaman.banner.update', $banner->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
@@ -53,7 +53,7 @@
             <button type="submit" class="btn-primary">
                 Update
             </button>
-            <a href="{{ route('admin.banner') }}" class="btn-light">
+            <a href="{{ route('admin.kelola-halaman.banner') }}" class="btn-light">
                 Batal
             </a>
         </div>

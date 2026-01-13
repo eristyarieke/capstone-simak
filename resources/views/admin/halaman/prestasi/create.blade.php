@@ -30,11 +30,11 @@
                 <label class="block text-gray-700 font-bold mb-2">Tingkat</label>
                 <select name="tingkat" class="input w-full" required>
                     <option value="" disabled selected>-- Pilih Tingkat --</option>
+                    <option value="Sekolah">Sekolah</option>
                     <option value="Kecamatan">Kecamatan</option>
-                    <option value="Kabupaten/Kota">Kabupaten/Kota</option>
+                    <option value="Kota">Kota</option>
                     <option value="Provinsi">Provinsi</option>
                     <option value="Nasional">Nasional</option>
-                    <option value="Internasional">Internasional</option>
                 </select>
             </div>
 

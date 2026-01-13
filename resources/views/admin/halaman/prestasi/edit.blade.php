@@ -30,11 +30,11 @@
             <div>
                 <label class="block text-gray-700 font-bold mb-2">Tingkat</label>
                 <select name="tingkat" class="input w-full" required>
+                    <option value="Kecamatan" {{ $prestasi->tingkat == 'Sekolah' ? 'selected' : '' }}>Sekolah</option>
                     <option value="Kecamatan" {{ $prestasi->tingkat == 'Kecamatan' ? 'selected' : '' }}>Kecamatan</option>
-                    <option value="Kabupaten/Kota" {{ $prestasi->tingkat == 'Kabupaten/Kota' ? 'selected' : '' }}>Kabupaten/Kota</option>
+                    <option value="Kota" {{ $prestasi->tingkat == 'Kota' ? 'selected' : '' }}>Kota</option>
                     <option value="Provinsi" {{ $prestasi->tingkat == 'Provinsi' ? 'selected' : '' }}>Provinsi</option>
                     <option value="Nasional" {{ $prestasi->tingkat == 'Nasional' ? 'selected' : '' }}>Nasional</option>
-                    <option value="Internasional" {{ $prestasi->tingkat == 'Internasional' ? 'selected' : '' }}>Internasional</option>
                 </select>
             </div>
 
