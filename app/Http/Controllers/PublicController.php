@@ -28,31 +28,25 @@ class PublicController extends Controller
 {
     public function index()
     {
-        // Banner aktif saja
         $sliders = Slider::where('status', 'aktif')->get();
 
-        // Sambutan (single record)
         $sambutan = SambutanKepsek::first();
 
-        // Pengumuman yang tampil
         $pengumuman = Pengumuman::where('status', 'tampil')
             ->orderBy('tanggal', 'desc')
             ->limit(3)
             ->get();
 
-        // Artikel publish
         $artikelTerbaru = Artikel::where('status', 'publish')
             ->orderBy('tanggal_publish', 'desc')
             ->limit(3)
             ->get();
 
-        // Statistik
         $total_siswa = Siswa::count();
         $total_guru  = Guru::count();
         $total_kelas = Kelas::count();
         $total_mapel = Mapel::count();
 
-        // Tahun ajaran aktif
         $ta_aktif = TahunAjaran::where('is_aktif', 1)->first();
         $tahun_ajaran = $ta_aktif
             ? (str_contains($ta_aktif->nama_tahun, '/')

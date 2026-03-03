@@ -562,7 +562,6 @@ html {
 
 body {
   font-family: 'Poppins', sans-serif;
-  /* Menggunakan Slate agar lebih lembut & modern dibanding Gray murni */
   --tw-bg-opacity: 1;
   background-color: rgb(248 250 252 / var(--tw-bg-opacity, 1));
   line-height: 1.625;
@@ -577,8 +576,6 @@ h1, h2, h3, h4, h5, h6{
   --tw-text-opacity: 1;
   color: rgb(30 41 59 / var(--tw-text-opacity, 1));
 }
-
-/* Styling default untuk link dalam paragraf (artikel) */
 
 p a{
   --tw-text-opacity: 1;
@@ -598,24 +595,10 @@ p a:hover{
 
 .container{
   width: 100%;
-}
-
-@media (min-width: 640px){
-  .container{
-    max-width: 640px;
-  }
-}
-
-@media (min-width: 768px){
-  .container{
-    max-width: 768px;
-  }
-}
-
-@media (min-width: 1024px){
-  .container{
-    max-width: 1024px;
-  }
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 1rem;
+  padding-left: 1rem;
 }
 
 @media (min-width: 1280px){
@@ -624,9 +607,29 @@ p a:hover{
   }
 }
 
-@media (min-width: 1536px){
+/* 🔥 INI YANG KURANG DARI TADI! 🔥 */
+
+/* Kita paksa Container supaya selalu di tengah & punya jarak */
+
+.container{
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 80rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+@media (min-width: 640px){
   .container{
-    max-width: 1536px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px){
+  .container{
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 }
 
@@ -660,8 +663,6 @@ p a:hover{
   }
 }
 
-/* Efek Garis Bawah Animasi pada Navbar */
-
 .nav-link::after {
   content: '';
   position: absolute;
@@ -687,8 +688,6 @@ p a:hover{
   --tw-text-opacity: 1;
   color: rgb(37 99 235 / var(--tw-text-opacity, 1));
 }
-
-/* Mobile Menu Link (jika ada dropdown mobile) */
 
 /* --- BUTTONS --- */
 
@@ -727,16 +726,12 @@ p a:hover{
 
 /* --- PAGINATION --- */
 
-/* Menyesuaikan output default Laravel Tailwind Pagination */
-
 nav[role="navigation"]{
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
 }
-
-/* Style angka pagination */
 
 nav[role="navigation"] a,
   nav[role="navigation"] span{
@@ -753,8 +748,6 @@ nav[role="navigation"] a,
   transition-duration: 200ms;
 }
 
-/* Halaman Aktif */
-
 span[aria-current="page"] > span{
   --tw-border-opacity: 1 !important;
   border-color: rgb(37 99 235 / var(--tw-border-opacity, 1)) !important;
@@ -768,8 +761,6 @@ span[aria-current="page"] > span{
   --tw-shadow-color: rgb(37 99 235 / 0.3) !important;
   --tw-shadow: var(--tw-shadow-colored) !important;
 }
-
-/* Halaman Tidak Aktif / Link */
 
 nav[role="navigation"] a{
   border-width: 1px;
@@ -816,6 +807,14 @@ nav[role="navigation"] a:hover{
 
 .-bottom-2{
   bottom: -0.5rem;
+}
+
+.-right-10{
+  right: -2.5rem;
+}
+
+.-top-10{
+  top: -2.5rem;
 }
 
 .bottom-0{
@@ -866,10 +865,6 @@ nav[role="navigation"] a:hover{
   right: 1rem;
 }
 
-.right-5{
-  right: 1.25rem;
-}
-
 .top-0{
   top: 0px;
 }
@@ -890,10 +885,6 @@ nav[role="navigation"] a:hover{
   top: 1rem;
 }
 
-.top-5{
-  top: 1.25rem;
-}
-
 .z-0{
   z-index: 0;
 }
@@ -904,6 +895,10 @@ nav[role="navigation"] a:hover{
 
 .z-20{
   z-index: 20;
+}
+
+.z-30{
+  z-index: 30;
 }
 
 .z-40{
@@ -956,6 +951,10 @@ nav[role="navigation"] a:hover{
 
 .-mt-20{
   margin-top: -5rem;
+}
+
+.mb-0\.5{
+  margin-bottom: 0.125rem;
 }
 
 .mb-1{
@@ -1127,6 +1126,10 @@ nav[role="navigation"] a:hover{
   height: 3rem;
 }
 
+.h-14{
+  height: 3.5rem;
+}
+
 .h-16{
   height: 4rem;
 }
@@ -1239,6 +1242,10 @@ nav[role="navigation"] a:hover{
   width: 3rem;
 }
 
+.w-14{
+  width: 3.5rem;
+}
+
 .w-16{
   width: 4rem;
 }
@@ -1328,10 +1335,6 @@ nav[role="navigation"] a:hover{
   max-width: 56rem;
 }
 
-.max-w-\[150px\]{
-  max-width: 150px;
-}
-
 .max-w-lg{
   max-width: 32rem;
 }
@@ -1384,9 +1387,13 @@ nav[role="navigation"] a:hover{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.scale-50{
-  --tw-scale-x: .5;
-  --tw-scale-y: .5;
+.translate-y-4{
+  --tw-translate-y: 1rem;
+  transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
+}
+
+.rotate-12{
+  --tw-rotate: 12deg;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -1674,6 +1681,10 @@ nav[role="navigation"] a:hover{
   border-color: rgb(191 219 254 / var(--tw-border-opacity, 1));
 }
 
+.border-blue-400\/30{
+  border-color: rgb(96 165 250 / 0.3);
+}
+
 .border-blue-600{
   --tw-border-opacity: 1;
   border-color: rgb(37 99 235 / var(--tw-border-opacity, 1));
@@ -1712,6 +1723,11 @@ nav[role="navigation"] a:hover{
 .border-red-300{
   --tw-border-opacity: 1;
   border-color: rgb(252 165 165 / var(--tw-border-opacity, 1));
+}
+
+.border-red-400{
+  --tw-border-opacity: 1;
+  border-color: rgb(248 113 113 / var(--tw-border-opacity, 1));
 }
 
 .border-slate-100{
@@ -1769,10 +1785,6 @@ nav[role="navigation"] a:hover{
   background-color: rgb(0 0 0 / 0.2);
 }
 
-.bg-black\/40{
-  background-color: rgb(0 0 0 / 0.4);
-}
-
 .bg-blue-100{
   --tw-bg-opacity: 1;
   background-color: rgb(219 234 254 / var(--tw-bg-opacity, 1));
@@ -1796,6 +1808,10 @@ nav[role="navigation"] a:hover{
 .bg-blue-600{
   --tw-bg-opacity: 1;
   background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
+}
+
+.bg-blue-900\/60{
+  background-color: rgb(30 58 138 / 0.6);
 }
 
 .bg-gray-100{
@@ -1977,16 +1993,18 @@ nav[role="navigation"] a:hover{
   --tw-bg-opacity: 0.6;
 }
 
-.bg-gradient-to-br{
-  background-image: linear-gradient(to bottom right, var(--tw-gradient-stops));
-}
-
 .bg-gradient-to-r{
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
 }
 
 .bg-gradient-to-t{
   background-image: linear-gradient(to top, var(--tw-gradient-stops));
+}
+
+.from-black\/10{
+  --tw-gradient-from: rgb(0 0 0 / 0.1) var(--tw-gradient-from-position);
+  --tw-gradient-to: rgb(0 0 0 / 0) var(--tw-gradient-to-position);
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
 .from-black\/40{
@@ -2001,8 +2019,8 @@ nav[role="navigation"] a:hover{
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.from-slate-900\/50{
-  --tw-gradient-from: rgb(15 23 42 / 0.5) var(--tw-gradient-from-position);
+.from-slate-900\/60{
+  --tw-gradient-from: rgb(15 23 42 / 0.6) var(--tw-gradient-from-position);
   --tw-gradient-to: rgb(15 23 42 / 0) var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
@@ -2019,12 +2037,6 @@ nav[role="navigation"] a:hover{
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
 }
 
-.from-yellow-50{
-  --tw-gradient-from: #fefce8 var(--tw-gradient-from-position);
-  --tw-gradient-to: rgb(254 252 232 / 0) var(--tw-gradient-to-position);
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
-}
-
 .via-slate-900\/40{
   --tw-gradient-to: rgb(15 23 42 / 0)  var(--tw-gradient-to-position);
   --tw-gradient-stops: var(--tw-gradient-from), rgb(15 23 42 / 0.4) var(--tw-gradient-via-position), var(--tw-gradient-to);
@@ -2032,10 +2044,6 @@ nav[role="navigation"] a:hover{
 
 .to-transparent{
   --tw-gradient-to: transparent var(--tw-gradient-to-position);
-}
-
-.to-white{
-  --tw-gradient-to: #fff var(--tw-gradient-to-position);
 }
 
 .to-yellow-200{
@@ -2098,11 +2106,6 @@ nav[role="navigation"] a:hover{
 .px-4{
   padding-left: 1rem;
   padding-right: 1rem;
-}
-
-.px-5{
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
 }
 
 .px-6{
@@ -2188,6 +2191,10 @@ nav[role="navigation"] a:hover{
   padding-bottom: 5rem;
 }
 
+.pb-4{
+  padding-bottom: 1rem;
+}
+
 .pb-6{
   padding-bottom: 1.5rem;
 }
@@ -2212,8 +2219,8 @@ nav[role="navigation"] a:hover{
   padding-top: 1rem;
 }
 
-.pt-5{
-  padding-top: 1.25rem;
+.pt-6{
+  padding-top: 1.5rem;
 }
 
 .pt-8{
@@ -2599,10 +2606,6 @@ nav[role="navigation"] a:hover{
   opacity: 0.6;
 }
 
-.opacity-80{
-  opacity: 0.8;
-}
-
 .shadow{
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);
@@ -2645,6 +2648,11 @@ nav[role="navigation"] a:hover{
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
+.shadow-blue-600\/20{
+  --tw-shadow-color: rgb(37 99 235 / 0.2);
+  --tw-shadow: var(--tw-shadow-colored);
+}
+
 .shadow-blue-600\/30{
   --tw-shadow-color: rgb(37 99 235 / 0.3);
   --tw-shadow: var(--tw-shadow-colored);
@@ -2675,11 +2683,6 @@ nav[role="navigation"] a:hover{
   outline-offset: 2px;
 }
 
-.blur{
-  --tw-blur: blur(8px);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
 .blur-2xl{
   --tw-blur: blur(40px);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
@@ -2687,11 +2690,6 @@ nav[role="navigation"] a:hover{
 
 .blur-3xl{
   --tw-blur: blur(64px);
-  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
-}
-
-.blur-xl{
-  --tw-blur: blur(24px);
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
@@ -2768,6 +2766,10 @@ nav[role="navigation"] a:hover{
   transition-delay: 200ms;
 }
 
+.delay-75{
+  transition-delay: 75ms;
+}
+
 .duration-150{
   transition-duration: 150ms;
 }
@@ -2787,8 +2789,6 @@ nav[role="navigation"] a:hover{
 .ease-out{
   transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
 }
-
-/* Animasi Header (Fade In Up) */
 
 .animate-fade-in-up {
   animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -2811,18 +2811,16 @@ nav[role="navigation"] a:hover{
   }
 }
 
-/* Glassmorphism Utilities */
-
 /* =========================================
    BASE STYLES
    ========================================= */
 
 /* =========================================
-   UTILITIES (Custom Animations & Helpers)
+   COMPONENTS (OBAT ANTI MEPET ADA DI SINI)
    ========================================= */
 
 /* =========================================
-   COMPONENTS
+   UTILITIES
    ========================================= */
 
 .selection\:bg-blue-200 *::-moz-selection{
@@ -3157,9 +3155,8 @@ nav[role="navigation"] a:hover{
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.group:hover .group-hover\:scale-100{
-  --tw-scale-x: 1;
-  --tw-scale-y: 1;
+.group:hover .group-hover\:translate-y-0{
+  --tw-translate-y: 0px;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
@@ -3190,14 +3187,18 @@ nav[role="navigation"] a:hover{
   background-color: rgb(37 99 235 / var(--tw-bg-opacity, 1));
 }
 
-.group:hover .group-hover\:bg-green-600{
+.group:hover .group-hover\:bg-green-500{
   --tw-bg-opacity: 1;
-  background-color: rgb(22 163 74 / var(--tw-bg-opacity, 1));
+  background-color: rgb(34 197 94 / var(--tw-bg-opacity, 1));
 }
 
 .group:hover .group-hover\:bg-red-600{
   --tw-bg-opacity: 1;
   background-color: rgb(220 38 38 / var(--tw-bg-opacity, 1));
+}
+
+.group:hover .group-hover\:bg-yellow-50\/50{
+  background-color: rgb(254 252 232 / 0.5);
 }
 
 .group:hover .group-hover\:text-blue-500{
@@ -3215,21 +3216,32 @@ nav[role="navigation"] a:hover{
   color: rgb(29 78 216 / var(--tw-text-opacity, 1));
 }
 
+.group:hover .group-hover\:text-slate-800{
+  --tw-text-opacity: 1;
+  color: rgb(30 41 59 / var(--tw-text-opacity, 1));
+}
+
 .group:hover .group-hover\:text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity, 1));
+}
+
+.group:hover .group-hover\:opacity-10{
+  opacity: 0.1;
 }
 
 .group:hover .group-hover\:opacity-100{
   opacity: 1;
 }
 
-.group:hover .group-hover\:opacity-20{
-  opacity: 0.2;
-}
-
 .group:hover .group-hover\:opacity-30{
   opacity: 0.3;
+}
+
+.group:hover .group-hover\:shadow-md{
+  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
 .group:hover .group-hover\:grayscale-0{
@@ -3335,6 +3347,14 @@ nav[role="navigation"] a:hover{
     padding-bottom: 6rem;
   }
 
+  .md\:pl-2{
+    padding-left: 0.5rem;
+  }
+
+  .md\:pl-6{
+    padding-left: 1.5rem;
+  }
+
   .md\:text-left{
     text-align: left;
   }
@@ -3371,12 +3391,28 @@ nav[role="navigation"] a:hover{
 }
 
 @media (min-width: 1024px){
+  .lg\:sticky{
+    position: sticky;
+  }
+
+  .lg\:top-24{
+    top: 6rem;
+  }
+
   .lg\:col-span-2{
     grid-column: span 2 / span 2;
   }
 
   .lg\:min-h-full{
     min-height: 100%;
+  }
+
+  .lg\:w-1\/3{
+    width: 33.333333%;
+  }
+
+  .lg\:w-2\/3{
+    width: 66.666667%;
   }
 
   .lg\:w-5\/12{
@@ -3407,6 +3443,10 @@ nav[role="navigation"] a:hover{
     gap: 3rem;
   }
 
+  .lg\:gap-16{
+    gap: 4rem;
+  }
+
   .lg\:gap-24{
     gap: 6rem;
   }
@@ -3421,8 +3461,8 @@ nav[role="navigation"] a:hover{
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to);
   }
 
-  .lg\:to-black\/10{
-    --tw-gradient-to: rgb(0 0 0 / 0.1) var(--tw-gradient-to-position);
+  .lg\:to-black\/5{
+    --tw-gradient-to: rgb(0 0 0 / 0.05) var(--tw-gradient-to-position);
   }
 
   .lg\:p-16{
