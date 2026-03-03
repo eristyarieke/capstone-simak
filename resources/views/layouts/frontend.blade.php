@@ -16,17 +16,15 @@
 
     {{-- 🔥 STYLE PENYELAMAT LAYOUT 🔥 --}}
     <style>
-        /* Memaksa Container ke Tengah & Punya Jarak Kiri-Kanan */
         .custom-container {
             width: 100%;
-            max-width: 1280px !important; /* Lebar maksimal website */
+            max-width: 1280px !important; 
             margin-left: auto !important;
             margin-right: auto !important;
             padding-left: 24px !important;
             padding-right: 24px !important;
         }
 
-        /* Style Garis Bawah Navbar */
         .nav-link::after {
             content: '';
             display: block;
